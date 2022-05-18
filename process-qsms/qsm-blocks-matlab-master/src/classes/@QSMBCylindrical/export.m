@@ -2,13 +2,13 @@
 %
 % Inputs:
 %
-% Format            String descriptor of the export format. The value is 
+% Format            String descriptor of the export format. The value is
 %                   case-insensitive. Possible values are:
 %
-% 'OBJ'             Wavefront OBJ format. Cylinders are converted to 
+% 'OBJ'             Wavefront OBJ format. Cylinders are converted to
 %                   vertices and faces prior to export.
 %
-% 'PLY'             Polygon file format. Cylinders are converted to 
+% 'PLY'             Polygon file format. Cylinders are converted to
 %                   vertices and faces prior to export.
 %
 % 'TXT' or 'TEXT'   Proprietary format that contains cylinder, branch and
@@ -29,10 +29,10 @@
 %                   sets the total width of the printed float.
 %                   Default value is 4.
 %
-% 'FaceCount'       Set the integer count or faces to compute 
+% 'FaceCount'       Set the integer count or faces to compute
 %                   on each cylinder. Can be either a single
-%                   integer or a two-element vector of 
-%                   integers, in which case the face count is 
+%                   integer or a two-element vector of
+%                   integers, in which case the face count is
 %                   interpolated linearly based on the relative
 %                   radii, i.e., smaller cylinders have less
 %                   faces. Default value is 5.
@@ -40,13 +40,13 @@
 % 'Quads'           Boolean. If true use quads instead of
 %                   triangles on cylinder envelope faces.
 %                   By default TRUE. Can be defined without
-%                   value pair, then value is interpreted as 
+%                   value pair, then value is interpreted as
 %                   TRUE.
 %
-% 'Closed'          Boolean. If true a triangle fan of faces is 
+% 'Closed'          Boolean. If true a triangle fan of faces is
 %                   generated to "close" the cylinder top and
-%                   bottom. By default FALSE.  Can be defined 
-%                   without value pair, then value is 
+%                   bottom. By default FALSE.  Can be defined
+%                   without value pair, then value is
 %                   interpreted as TRUE.
 %
 % 'TriangleStem'    Boolean. If TRUE triangulated stem data is
@@ -62,8 +62,8 @@
 %                   to move base to [0,0,0].
 %
 % 'Filter'          Boolean vertor with one element per
-%                   cylinder or a string descriptor passed to 
-%                   the QSMBCylindrical.get_cylinder_set() 
+%                   cylinder or a string descriptor passed to
+%                   the QSMBCylindrical.get_cylinder_set()
 %                   method. Only export cylinders that are set
 %                   to TRUE.
 %
@@ -90,43 +90,43 @@
 % 'ColorSource'     String descriptor of property to use for
 %                   coloring vertices, faces or cylinders. Use
 %                   as an alternative for the 'Color' attribute.
-%                   Only applicable for PLY and Blender file 
-%                   formats. Discrete color sources use the colors 
-%                   from the bject color_matrix property or an 
+%                   Only applicable for PLY and Blender file
+%                   formats. Discrete color sources use the colors
+%                   from the bject color_matrix property or an
 %                   override provided by the 'ColorMatrix'
 %                   attribute. Continuous color sources use the
 %                   current system-wide COLORMAP.
 %                   QSMBCylindrical.get_color_distribution()
-%                   method is used to compute the color 
+%                   method is used to compute the color
 %                   distribution. Possible values are:
 %
-%       'None'                      No color based on source. 
+%       'None'                      No color based on source.
 %                                   This is the default value.
 %
 %       'CylinderLength'            Length of a cylinder.
-%      
-%       'CylinderIsLast'            Highlight last cylinders in 
+%
+%       'CylinderIsLast'            Highlight last cylinders in
 %                                   each branch.
-%      
+%
 %       'CylinderAdded'             Highlight cylinders that were
 %                                   added after reconstruction.
-%      
+%
 %       'CylinderRadius'            Cylinder radius.
-%      
+%
 %       'CylinderOrder',
 %       'CylinderBranchOrder',
 %       'BranchOrder',
 %       'Order'                     Branch order of cylinder.
-%      
+%
 %       'CylinderBranchIndex',
 %       'CylinderIndex',
 %       'BranchIndex'               Separate branches with color.
-%      
-%       'BranchLength'              Longer branches have higher 
+%
+%       'BranchLength'              Longer branches have higher
 %                                   index.
-%      
+%
 %       'BranchAngle'               Branching angle at branch base.
-%      
+%
 %       'BranchHeight'              Mean height of branch.
 %
 %       'VertexHeight'              Height of vertices.
@@ -137,13 +137,13 @@
 %       'FaceHeight'                Mean height of face vertices.
 %
 %
-% 'Comments'        Boolean. Extra comments are printed in the 
-%                   resulting file when TRUE. By default TRUE.  
+% 'Comments'        Boolean. Extra comments are printed in the
+%                   resulting file when TRUE. By default TRUE.
 %                   Can be defined without value pair, then value
 %                   is interpreted as TRUE.
 %
-% 'Header'          Cell-array of string that are printed at the 
-%                   top of the export file, one element (row) at 
+% 'Header'          Cell-array of string that are printed at the
+%                   top of the export file, one element (row) at
 %                   a time. The user is resposible for including
 %                   the format specific comment syntax, when
 %                   required.
@@ -155,7 +155,7 @@
 %                   the object cylinder count, as the values on
 %                   each row are printed after the default cylinder
 %                   attributes. Can also be given as a cell-array
-%                   when using the 'TXT' format. The cell-array 
+%                   when using the 'TXT' format. The cell-array
 %                   should have at most three elements, with the
 %                   first containing numeric cylinder-level data.
 %                   second numeric branch-level data and the third
@@ -186,17 +186,17 @@
 
 
 % This file is part of QSM-Blocks.
-% 
+%
 % QSM-Blocks is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % QSM-Blocks is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with QSM-Blocks.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -253,7 +253,7 @@ function export(ob, Format, File, varargin)
 
     % Color data for cylinders.
     Param.CylColor = [];
-    
+
     % Logical vector for selecting a subset of cylinders.
     Param.ICyl = [];
 
@@ -284,7 +284,7 @@ function export(ob, Format, File, varargin)
     % Color matrix scaling.
     if Param.FScaleColor
 
-        % If filtering is enabled, only select filtered 
+        % If filtering is enabled, only select filtered
         % cylinder color values for extreme value compututation.
         if Param.FFilter
             SelCylColor = Param.CylColor(Param.ICyl);
@@ -306,7 +306,7 @@ function export(ob, Format, File, varargin)
     % Define float print format.
 
     % If the precision argument has two elements, the first
-    % element is the precision and the second is the total 
+    % element is the precision and the second is the total
     % field width.
     if length(Param.FloatPrec) > 1
         FloatFormat = sprintf(...
@@ -333,7 +333,7 @@ function export(ob, Format, File, varargin)
         % tree-level data.
         if iscell(Param.ExtraData)
 
-            % Column format collection. One element per extra data 
+            % Column format collection. One element per extra data
             % element.
             ExtraColFormat = cell(size(Param.ExtraData));
 
@@ -388,7 +388,7 @@ function export(ob, Format, File, varargin)
                     end
                 end
 
-                
+
             end
 
         % Otherwise extra data is a single matrix and contain extra data
@@ -409,7 +409,7 @@ function export(ob, Format, File, varargin)
 
                 % Otherwise use float.
                 else
-                    
+
                     ExtraColFormat{iCol} = FloatFormat;
                 end
 
@@ -431,8 +431,8 @@ function export(ob, Format, File, varargin)
         case 'ply'
 
             % Compute cylinder vertices and faces. Filtering can
-            % limit inlcuded cylinders. Face count, side face 
-            % shape and top and bottom triangle fans can be 
+            % limit inlcuded cylinders. Face count, side face
+            % shape and top and bottom triangle fans can be
             % configured.
             [Vert, Faces, JVertCyl] = ob.compute_geometry(...
                 Param.FaceCount, ...
@@ -512,7 +512,7 @@ function export(ob, Format, File, varargin)
 
                 Param.CylColor = ColorDist;
             end
-        
+
             % Number of vertices.
             NVertex = size(Vert,1);
             % Number of faces.
@@ -626,8 +626,8 @@ function export(ob, Format, File, varargin)
         case 'obj'
 
             % Compute cylinder vertices and faces. Filtering can
-            % limit inlcuded cylinders. Face count, side face 
-            % shape and top and bottom triangle fans can be 
+            % limit inlcuded cylinders. Face count, side face
+            % shape and top and bottom triangle fans can be
             % configured.
             [Vert, Faces, JVertCyl] = ob.compute_geometry(...
                 Param.FaceCount, ...
@@ -650,7 +650,7 @@ function export(ob, Format, File, varargin)
                         JVertCyl ...
                 );
             end
-        
+
             % Number of vertices.
         	NVertex = size(Vert,1);
 
@@ -691,19 +691,21 @@ function export(ob, Format, File, varargin)
                 );
             end
 
-        % Custom text file format containing cylinder, branch and tree 
+        % Custom text file format containing cylinder, branch and tree
         % data.
         case {'txt', 'text'}
 
             % Print custom header.
-            for iLine = 1:numel(Param.Header)
-                fprintf(fid,'%s\n',Param.Header{iLine});
-            end
+
+%             for iLine = 1:numel(Param.Header)
+%                 fprintf(fid,'%s\n',Param.Header{iLine});
+%             end
 
             % Section header as comment.
-            if Param.FComment
-                fprintf(fid,'# Cylinder data\n');
-            end
+            % Get rid of header
+            %if Param.FComment
+            %    fprintf(fid,'# Cylinder data\n');
+            %end
 
             % Go through cylinders. Print radius, length, start point,
             % axis direction, parent index, extension index, branch index,
@@ -767,7 +769,7 @@ function export(ob, Format, File, varargin)
                 if Param.FExtraData
 
                     % Extra data can be given as a cell array. Then the
-                    % first element is expected to be extra data for 
+                    % first element is expected to be extra data for
                     % the cylinder lines.
                     if iscell(Param.ExtraData)
                         CylParam.ExtraData = Param.ExtraData{1};
@@ -780,7 +782,7 @@ function export(ob, Format, File, varargin)
                         ColFormat = ExtraColFormat;
                     end
 
-                    % Go through the columns and print each additional 
+                    % Go through the columns and print each additional
                     % data point.
                     for iCol = 1:size(CylParam.ExtraData,2)
 
@@ -797,233 +799,233 @@ function export(ob, Format, File, varargin)
 
             end
 
-            % Section header as comment.
-            if Param.FComment
-                fprintf(fid,'# Branch data\n');
-            end
+%             % Section header as comment.
+%             if Param.FComment
+%                 fprintf(fid,'# Branch data\n');
+%             end
+% 
+%             % For each cylinder print order, parent index, volume, length,
+%             % angle, and height. Use appropriate number format.
+%             for iBranch = 1:ob.branch_count
+% 
+%                 fprintf(fid, ...
+%                     IntFormat, ...
+%                     ob.branch_order(iBranch) ...
+%                 );
+%                 fprintf(fid, ...
+%                     [' ' IntFormat], ...
+%                     ob.branch_parent(iBranch) ...
+%                 );
+%                 fprintf(fid, ...
+%                     [' ' FloatFormat], ...
+%                     ob.branch_volume(iBranch) ...
+%                 );
+%                 fprintf(fid, ...
+%                     [' ' FloatFormat], ...
+%                     ob.branch_length(iBranch) ...
+%                 );
+%                 fprintf(fid, ...
+%                     [' ' FloatFormat], ...
+%                     ob.branch_angle(iBranch) ...
+%                 );
+%                 fprintf(fid, ...
+%                     [' ' FloatFormat], ...
+%                     ob.branch_height(iBranch) ...
+%                 );
+% 
+%                 % If extra data given, print one column at a time.
+%                 if Param.FExtraData && ...
+%                     iscell(Param.ExtraData) && ...
+%                     numel(Param.ExtraData) > 1
+% 
+%                     % Get branch-level extra data.
+%                     BranchParam.ExtraData = Param.ExtraData{2};
+%                     % Column number formats.
+%                     ColFormat = ExtraColFormat{2};
+% 
+%                     % Print each column.
+%                     for iCol = 1:size(BranchParam.ExtraData,2)
+% 
+%                         fprintf(...
+%                             fid, ...
+%                             [' ' ColFormat{iCol}], ...
+%                             BranchParam.ExtraData(iBranch,iCol) ...
+%                         );
+% 
+%                     end
+%                 end
+% 
+%                 % End current branch line.
+%                 fprintf(fid, '\n');
+% 
+%             end
 
-            % For each cylinder print order, parent index, volume, length,
-            % angle, and height. Use appropriate number format.
-            for iBranch = 1:ob.branch_count
-
-                fprintf(fid, ...
-                    IntFormat, ...
-                    ob.branch_order(iBranch) ...
-                );
-                fprintf(fid, ...
-                    [' ' IntFormat], ...
-                    ob.branch_parent(iBranch) ...
-                );
-                fprintf(fid, ...
-                    [' ' FloatFormat], ...
-                    ob.branch_volume(iBranch) ...
-                );
-                fprintf(fid, ...
-                    [' ' FloatFormat], ...
-                    ob.branch_length(iBranch) ...
-                );
-                fprintf(fid, ...
-                    [' ' FloatFormat], ...
-                    ob.branch_angle(iBranch) ...
-                );
-                fprintf(fid, ...
-                    [' ' FloatFormat], ...
-                    ob.branch_height(iBranch) ...
-                );
-
-                % If extra data given, print one column at a time.
-                if Param.FExtraData && ...
-                    iscell(Param.ExtraData) && ...
-                    numel(Param.ExtraData) > 1
-
-                    % Get branch-level extra data.
-                    BranchParam.ExtraData = Param.ExtraData{2};
-                    % Column number formats.
-                    ColFormat = ExtraColFormat{2};
-
-                    % Print each column.
-                    for iCol = 1:size(BranchParam.ExtraData,2)
-
-                        fprintf(...
-                            fid, ...
-                            [' ' ColFormat{iCol}], ...
-                            BranchParam.ExtraData(iBranch,iCol) ...
-                        );
-
-                    end
-                end
-
-                % End current branch line.
-                fprintf(fid, '\n');
-
-            end
-
-            % Print section header as comment.
-            if Param.FComment
-                fprintf(fid,'# Tree data\n');
-            end
-
-            % TotalVolume
-            % TrunkVolume
-            % BranchVolume
-            % TreeHeight
-            % TrunkLength
-            % BranchLength
-            % NumberBranches    Total number of branches
-            % MaxBranchOrder 
-            % TotalArea 
-            % DBHqsm        From the cylinder of the QSM at the right heigth
-            % DBHcyl        From the cylinder fitted to the section 1.1-1.5m
-            % location      (x,y,z)-coordinates of the base of the tree
-            % StemTaper     Stem taper function/curve from the QSM
-            % VolumeCylDiam     Distribution of the total volume in diameter classes
-            % LengthCylDiam     Distribution of the total length in diameter classes
-            % VolumeBranchOrder     Branch volume per branching order
-            % LengthBranchOrder     Branch length per branching order
-            % NumberBranchOrder     Number of branches per branching order
-
-            % Inline function to handle optional comment string printing.
-            % If comments are not included, the function returns an empty
-            % string.
-            if Param.FComment
-                c = @(str) str;
-            else
-                c = @(str) '';
-            end
-
-            % Print tree-level properties.
-
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.volume(), ...
-                FloatFormat, '', ...
-                c('# Total volume') ...
-            );
-
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.volume('stem'), ...
-                FloatFormat, '', ...
-                c('# Stem volume') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.volume('branch'), ...
-                FloatFormat, '', ...
-                c('# Branch volume') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.height(),  ...
-                FloatFormat, '', ...
-                c('# Tree height') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.length('stem'), ...
-                FloatFormat, '', ...
-                c('# Stem length') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.length('branch'), ...
-                FloatFormat, '', ...
-                c('# Branch length') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.branch_count, ...
-                IntFormat, '', ...
-                c('# Branch count') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                max(ob.branch_order), ...
-                IntFormat, '', ...
-                c('# Maximum branch order') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.area(), ...
-                FloatFormat, '', ...
-                c('# Total area') ...
-            );
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.dbh(), ...
-                FloatFormat, '', ...
-                c('# DBH from QSM') ...
-            );
-
-            % Check if custom property stored.
-            if ob.has_property('DBH CYL')
-                DBH = ob.get_property('DBH CYL');
-            else
-                DBH = 0;
-            end
-                
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                DBH, ...
-                FloatFormat, '', ...
-                c('# Cylinder fitting DBH') ...
-            );
-
-            QSMBCylindrical.print_number_line(...
-                fid, ...
-                ob.cylinder_start_point(1,:), ...
-                FloatFormat, '', ...
-                c('# Tree start point') ...
-            );
-
-            % Extra tree-level data.
-            if Param.FExtraData && ...
-                iscell(Param.ExtraData) && ...
-                numel(Param.ExtraData) > 2
-
-                % Get extra data.
-                TreeParam.ExtraData = Param.ExtraData{3};
-
-                % Column formats.
-                ColFormat = ExtraColFormat{3};
-
-                if iscell(TreeParam.ExtraData)
-
-                    % Print each cell.
-                    for iCol = 1:numel(TreeParam.ExtraData)
-
-                        % Format for cell content.
-                        CellFormat = repmat( ...
-                            [' ' ColFormat{iCol}], ...
-                            1, ...
-                            length(TreeParam.ExtraData{iCol}) ...
-                        );
-
-                        % Trim leading space.
-                        CellFormat = CellFormat(2:end);
-
-                        % Print scalar or vector.
-                        fprintf(...
-                            fid, ...
-                            [CellFormat '\n'], ...
-                            TreeParam.ExtraData{iCol} ...
-                        );
-
-                    end
-                else
-
-                    % Print each column.
-                    for iCol = 1:size(TreeParam.ExtraData,2)
-
-                        fprintf(...
-                            fid, ...
-                            [ColFormat{iCol} '\n'], ...
-                            TreeParam.ExtraData(iCol) ...
-                        );
-
-                    end
-                end
-            end
+%             % Print section header as comment.
+%             if Param.FComment
+%                 fprintf(fid,'# Tree data\n');
+%             end
+% 
+%             % TotalVolume
+%             % TrunkVolume
+%             % BranchVolume
+%             % TreeHeight
+%             % TrunkLength
+%             % BranchLength
+%             % NumberBranches    Total number of branches
+%             % MaxBranchOrder
+%             % TotalArea
+%             % DBHqsm        From the cylinder of the QSM at the right heigth
+%             % DBHcyl        From the cylinder fitted to the section 1.1-1.5m
+%             % location      (x,y,z)-coordinates of the base of the tree
+%             % StemTaper     Stem taper function/curve from the QSM
+%             % VolumeCylDiam     Distribution of the total volume in diameter classes
+%             % LengthCylDiam     Distribution of the total length in diameter classes
+%             % VolumeBranchOrder     Branch volume per branching order
+%             % LengthBranchOrder     Branch length per branching order
+%             % NumberBranchOrder     Number of branches per branching order
+% 
+%             % Inline function to handle optional comment string printing.
+%             % If comments are not included, the function returns an empty
+%             % string.
+%             if Param.FComment
+%                 c = @(str) str;
+%             else
+%                 c = @(str) '';
+%             end
+% 
+%             % Print tree-level properties.
+% 
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.volume(), ...
+%                 FloatFormat, '', ...
+%                 c('# Total volume') ...
+%             );
+% 
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.volume('stem'), ...
+%                 FloatFormat, '', ...
+%                 c('# Stem volume') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.volume('branch'), ...
+%                 FloatFormat, '', ...
+%                 c('# Branch volume') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.height(),  ...
+%                 FloatFormat, '', ...
+%                 c('# Tree height') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.length('stem'), ...
+%                 FloatFormat, '', ...
+%                 c('# Stem length') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.length('branch'), ...
+%                 FloatFormat, '', ...
+%                 c('# Branch length') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.branch_count, ...
+%                 IntFormat, '', ...
+%                 c('# Branch count') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 max(ob.branch_order), ...
+%                 IntFormat, '', ...
+%                 c('# Maximum branch order') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.area(), ...
+%                 FloatFormat, '', ...
+%                 c('# Total area') ...
+%             );
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.dbh(), ...
+%                 FloatFormat, '', ...
+%                 c('# DBH from QSM') ...
+%             );
+% 
+%             % Check if custom property stored.
+%             if ob.has_property('DBH CYL')
+%                 DBH = ob.get_property('DBH CYL');
+%             else
+%                 DBH = 0;
+%             end
+% 
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 DBH, ...
+%                 FloatFormat, '', ...
+%                 c('# Cylinder fitting DBH') ...
+%             );
+% 
+%             QSMBCylindrical.print_number_line(...
+%                 fid, ...
+%                 ob.cylinder_start_point(1,:), ...
+%                 FloatFormat, '', ...
+%                 c('# Tree start point') ...
+%             );
+% 
+%             % Extra tree-level data.
+%             if Param.FExtraData && ...
+%                 iscell(Param.ExtraData) && ...
+%                 numel(Param.ExtraData) > 2
+% 
+%                 % Get extra data.
+%                 TreeParam.ExtraData = Param.ExtraData{3};
+% 
+%                 % Column formats.
+%                 ColFormat = ExtraColFormat{3};
+% 
+%                 if iscell(TreeParam.ExtraData)
+% 
+%                     % Print each cell.
+%                     for iCol = 1:numel(TreeParam.ExtraData)
+% 
+%                         % Format for cell content.
+%                         CellFormat = repmat( ...
+%                             [' ' ColFormat{iCol}], ...
+%                             1, ...
+%                             length(TreeParam.ExtraData{iCol}) ...
+%                         );
+% 
+%                         % Trim leading space.
+%                         CellFormat = CellFormat(2:end);
+% 
+%                         % Print scalar or vector.
+%                         fprintf(...
+%                             fid, ...
+%                             [CellFormat '\n'], ...
+%                             TreeParam.ExtraData{iCol} ...
+%                         );
+% 
+%                     end
+%                 else
+% 
+%                     % Print each column.
+%                     for iCol = 1:size(TreeParam.ExtraData,2)
+% 
+%                         fprintf(...
+%                             fid, ...
+%                             [ColFormat{iCol} '\n'], ...
+%                             TreeParam.ExtraData(iCol) ...
+%                         );
+% 
+%                     end
+%                 end
+%             end
 
         % Format for importing data for blender visualizations. The text
         % file will include the minimum amount of cylinder-level data
@@ -1122,7 +1124,7 @@ function export(ob, Format, File, varargin)
                 if Param.FColor
 
                     for iCol = 1:size(Param.CylColor,2)
-                        
+
                         % Select number format.
                         if all(mod(Param.CylColor(:,iCol),1) == 0)
                             NumFormat = IntFormat;
@@ -1143,7 +1145,7 @@ function export(ob, Format, File, varargin)
 
                     % Print each column.
                     for iCol = 1:size(Param.ExtraData,2)
-                        
+
                         % Select number format.
                         if all(mod(Param.ExtraData(:,iCol),1) == 0)
                             NumFormat = IntFormat;
