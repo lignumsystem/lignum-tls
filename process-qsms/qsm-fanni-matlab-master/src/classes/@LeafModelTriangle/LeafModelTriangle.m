@@ -1,15 +1,15 @@
 % This file is part of QSM-FaNNI.
-% 
+%
 % QSM-FaNNI is free software: you can redistribute it and/or modify
 % it under the terms of the GNU General Public License as published by
 % the Free Software Foundation, either version 3 of the License, or
 % (at your option) any later version.
-% 
+%
 % QSM-FaNNI is distributed in the hope that it will be useful,
 % but WITHOUT ANY WARRANTY; without even the implied warranty of
 % MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 % GNU General Public License for more details.
-% 
+%
 % You should have received a copy of the GNU General Public License
 % along with QSM-FaNNI.  If not, see <http://www.gnu.org/licenses/>.
 
@@ -17,8 +17,8 @@ classdef LeafModelTriangle < LeafModel
 % Class for storing triangular leaf geometry. Class properties define a
 % base geometry that is positioned, scaled and rotated to receive exact
 % geometry of included leaves. The base can have any number of triangles.
-% LeafModelTriangle is a subclass of LeafModel. 
-    
+% LeafModelTriangle is a subclass of LeafModel.
+
     properties
 
         % Coordinates of the vertices forming a leaf.
@@ -30,7 +30,7 @@ classdef LeafModelTriangle < LeafModel
 
         % Indices of vertices forming the triangular faces.
         base_triangles = zeros(0,3);
-        
+
         % Area of the base.
         base_area = 0;
 
@@ -41,16 +41,16 @@ classdef LeafModelTriangle < LeafModel
         triangle_count = 0;
 
     end
-    
+
     properties(Access=private)
-        
+
         % Computed vertices of included leaves.
         % Used mainly for optimization.
         leaf_triangle_vertices;
 
         % Computed normals of included leaf triangles.
         leaf_triangle_normals;
-        
+
         % Projected values of the included leaf triangles of their
         % respective normals.
         leaf_triangle_zvalue;
@@ -66,15 +66,15 @@ classdef LeafModelTriangle < LeafModel
             % Store base geometry.
             ob.base_vertices = vertices;
             ob.base_triangles = tris;
-            
+
             % Get triangle count.
             ob.triangle_count = size(tris,1);
-            
+
             % Compute base dimensions from extreme points.
             mi = min(vertices,[],1);
             ma = max(vertices,[],1);
             ob.base_dimensions = ma - mi;
-            
+
             % Compute base area as the sum of all triangles.
             v1 = bsxfun(@minus, vertices(tris(:,2),:),...
                                 vertices(tris(:,1),:));
@@ -82,7 +82,7 @@ classdef LeafModelTriangle < LeafModel
             v2 = bsxfun(@minus, vertices(tris(:,3),:),...
                                 vertices(tris(:,1),:));
             %-
-            
+
             A = cross(v1,v2,2);
             ob.base_area = sum(sqrt(sum(A.^2,2)))/2;
 
@@ -93,22 +93,22 @@ classdef LeafModelTriangle < LeafModel
                     ob.base_ngons = varargin{1};
                 end
             end
-            
+
             % Initialize matrices for optimization.
             if nargin > 3
                 assert(isnumeric(varargin{2}) && isscalar(varargin{2}),...
                  'Initialization parameter should be a positive integer.');
                 %-
                 N = varargin{2};
-                
+
                 ob.leaf_start_point = zeros(N,3);
                 ob.leaf_direction   = zeros(N,3);
                 ob.leaf_normal      = zeros(N,3);
                 ob.leaf_scale       = zeros(N,3);
-                
+
                 ob.leaf_parent      = zeros(N,1);
                 ob.twig_start_point = zeros(N,3);
-                
+
                 ob.leaf_triangle_vertices = nan(N,9,ob.triangle_count);
                 ob.leaf_triangle_normals = nan(N,3,ob.triangle_count);
                 ob.leaf_triangle_zvalue = nan(N,ob.triangle_count);
@@ -123,24 +123,24 @@ classdef LeafModelTriangle < LeafModel
             % Extreme points.
             Sp_pr = bsxfun(@plus,ob.leaf_start_point, MaxLeafSize);
             Sp_mr = bsxfun(@plus,ob.leaf_start_point,-MaxLeafSize);
-            
+
             % Upper and lower limits for the tree in the z-axis.
             ob.tree_limits = [min([Sp_pr; Sp_mr],[],1); ...
                               max([Sp_pr; Sp_mr],[],1)];
             %-
 
         end
-        
+
         function trim_slack(ob)
         % As the main matrices can be initialized with empty rows, this
         % function can be used to trim the excess rows after all leaves
         % have been added.
-        
+
             ob.leaf_start_point = ob.leaf_start_point(1:ob.leaf_count,:);
             ob.leaf_direction   = ob.leaf_direction(1:ob.leaf_count,:);
             ob.leaf_normal      = ob.leaf_normal(1:ob.leaf_count,:);
             ob.leaf_scale       = ob.leaf_scale(1:ob.leaf_count,:);
-            
+
             ob.leaf_parent      = ob.leaf_parent(1:ob.leaf_count,:);
             ob.twig_start_point = ob.twig_start_point(1:ob.leaf_count,:);
 
@@ -161,10 +161,10 @@ classdef LeafModelTriangle < LeafModel
 
             % Object index for new leaf.
             index = ob.leaf_count + 1;
-            
+
             % Increase included leaf count.
             ob.leaf_count = index;
-            
+
             % If triangles have not been given, compute them.
             if nargin < 8
                 tris = ob.triangles(origin,dir,normal,scale);
@@ -185,7 +185,7 @@ classdef LeafModelTriangle < LeafModel
                                 TriNormals,...
                                 1./sqrt(sum(TriNormals.^2,2)));
             %-
-            
+
             % Store normal(s).
             ob.leaf_triangle_normals(index,:,:) = TriNormals';
 
@@ -199,29 +199,29 @@ classdef LeafModelTriangle < LeafModel
             ob.leaf_direction(index,:) = dir;
             ob.leaf_normal(index,:)  = normal;
             ob.leaf_scale(index,:) = scale;
-            
+
             ob.leaf_parent(index,:) = parent;
             ob.twig_start_point(index,:) = twig;
-            
+
             % Leaf area of new leaf is received by
-            % scaling the area of the base by the 
+            % scaling the area of the base by the
             % Y-scale of the leaf.
             area = ob.base_area*(scale(2)^2);
-            
-            % Increase leaf area. 
+
+            % Increase leaf area.
             ob.leaf_area = ob.leaf_area + area;
 
         end
 
-        
+
         function hit = leaf_intersect(ob, Candidates, NewTris)
         % Check if leaf with given triangles intersects any of the included
         % leaves.
-        
+
             % Number of candidate leaves.
             NCandidates = length(Candidates);
 
-            % Number of triangles in a leaf. 
+            % Number of triangles in a leaf.
             NTri = ob.triangle_count;
 
             % Hit detected.
@@ -237,12 +237,12 @@ classdef LeafModelTriangle < LeafModel
 
             % Iterate over candidates.
             for iCandidate = 1:NCandidates
-                
+
                 % Values for the triangle(s) of current candidate.
                 CandNormals = CandatesNormals(iCandidate,:,:);
                 CandTris    = CandatesTris(iCandidate,:,:);
                 CandLimits  = CandatesZvalues(iCandidate,:);
-                
+
                 if ob.triangle_count > 1
                     CandNormals = squeeze(CandNormals)';
                     CandTris    = squeeze(CandTris)';
@@ -250,12 +250,12 @@ classdef LeafModelTriangle < LeafModel
 
                 % Iterate over triangles in candidate.
                 for iCandTri = 1:NTri
-                    
+
                     CandTriNormal = CandNormals(iCandTri,:);
-                   
+
                     % Iterate over input triangles.
                     for iNewTri = 1:NTri
-                       
+
                         TriZvalues = CandTriNormal ...
                                    * reshape(NewTris(iNewTri,:),3,3)...
                                    - CandLimits(iCandTri);
@@ -271,7 +271,7 @@ classdef LeafModelTriangle < LeafModel
                                               NewTris(iNewTri,4:6) ...
                                               -NewTris(iNewTri,1:3));
                             %-
-                            
+
                             TriNormal = TriNormal./norm(TriNormal);
 
                             % Project one vertex to new triangle normal.
@@ -311,7 +311,7 @@ classdef LeafModelTriangle < LeafModel
                             end
 
                             RayDir = RayEnd - RayOrigin;
-                            
+
                             % Normalize direction vector.
                             RayDir = RayDir./norm(RayDir);
 
@@ -327,7 +327,7 @@ classdef LeafModelTriangle < LeafModel
                                                 CandTris(iCandTri,4:6),...
                                                 CandTris(iCandTri,7:9));
                             %-
-                            
+
                             % Return if intersection happens.
                             if hit
                                 return;
@@ -349,9 +349,9 @@ classdef LeafModelTriangle < LeafModel
                                 RayOrigin = CandTris(iCandTri,7:9);
                                 RayEnd    = CandTris(iCandTri,1:3);
                             end
-                            
+
                             RayDir = RayEnd - RayOrigin;
-                            
+
                             % Normalize direction vector.
                             RayDir = RayDir./norm(RayDir);
 
@@ -367,7 +367,7 @@ classdef LeafModelTriangle < LeafModel
                                                 NewTris(iNewTri,4:6),...
                                                 NewTris(iNewTri,7:9));
                             %-
-                            
+
                             % Return if intersection happens.
                             if hit
                                 return;
@@ -376,17 +376,17 @@ classdef LeafModelTriangle < LeafModel
                         end
 
                     end
-                    
+
                 end
 
             end
 
         end
 
-        
+
         function varargout = triangles(ob, origin, dir, normal, scale)
-        % Function for computing the geometry of a leaf based on the 
-        % transformation parameter inputs. 
+        % Function for computing the geometry of a leaf based on the
+        % transformation parameter inputs.
 
             [Vertices, Faces] = compute_geometry(ob, false, origin, ...
                                                  dir, normal, scale);
@@ -405,21 +405,21 @@ classdef LeafModelTriangle < LeafModel
 
         end
 
-        
+
         function h = plot_leaves(ob, varargin)
         % Plot accepted leaves using the PATCH function.
-            
+
             [Vertices, Faces] = compute_geometry(ob, false);
 
             tris = cat(2,Vertices(Faces(:,1),:),...
                          Vertices(Faces(:,2),:),...
                          Vertices(Faces(:,3),:));
-            
+
             % Reshape the triangle data for plotting.
             X = tris(:,[1 4 7])';
             Y = tris(:,[2 5 8])';
             Z = tris(:,[3 6 9])';
-            
+
             % Plot triangles.
             h = patch(X,Y,Z,1,varargin{:});
 
@@ -437,7 +437,7 @@ classdef LeafModelTriangle < LeafModel
             % If leaf transformation parameters are given as input,
             % use those single parameters.
             if nargin == 6
-                
+
                 origin = varargin{1};
                 dir    = varargin{2};
                 normal = varargin{3};
@@ -462,10 +462,10 @@ classdef LeafModelTriangle < LeafModel
                 % Indices of faces in leaf.
                 Faces = ob.base_triangles;
 
-            % If transformation parameters are not given, 
+            % If transformation parameters are not given,
             % use all the leaves in the model.
             else
-            
+
                 % Number of leaves in model.
                 NLeaf = ob.leaf_count;
 
@@ -606,7 +606,7 @@ classdef LeafModelTriangle < LeafModel
                 end
             end
 
-            
+
 
         end
 
@@ -624,16 +624,16 @@ classdef LeafModelTriangle < LeafModel
                 NCol = numel(varargin);
             end
 
-            % Set default precision.        
+            % Set default precision.
             if nargin < 5
                 d = 3;
             end
-            
+
             if nargin < 6
                 fOriginOverride = false;
                 OriginOffset = [];
             end
-            
+
             if nargin < 7 || isempty(Filter)
                 Filter = true(ob.leaf_count,1);
             end
@@ -651,7 +651,7 @@ classdef LeafModelTriangle < LeafModel
                     if fOriginOverride && not(isempty(OriginOffset))
                         Vertices = bsxfun(@minus,Vertices,OriginOffset);
                     end
-                    
+
                     % Write resulting vertices and faces to file.
                     LeafModelTriangle.export_vert_face_obj(Vertices,Faces,d,file);
 
@@ -713,6 +713,69 @@ classdef LeafModelTriangle < LeafModel
 
                     end
 
+                    case{'txt'}
+
+                    % Base vertices.
+                    BaseVertices = ob.base_vertices;
+
+                    % Base vertices either as polygons or triangles.
+                    if fNgon
+                        BaseFaces = ob.base_ngons;
+                    else
+                        BaseFaces = ob.base_triangles;
+                    end
+
+                    % Open file stream.
+                    fid = fopen(file,'w');
+
+                    % Remove this because I dont know what it is
+
+                    % Write base geometry to file in OBJ syntax.
+                    %LeafModelTriangle.export_vert_face_obj(BaseVertices,BaseFaces,d,fid);
+
+                    % Initialize format strings:
+                    % Single element.
+
+                    ft = ['%' num2str(d+2) '.' num2str(d) 'g '];
+                    % Three element vector.
+
+                    fmt = strtrim(repmat(ft,1,3));
+                    ft = strtrim(ft);
+
+                    % Iterate over leaves.
+                    for iLeaf = 1:ob.leaf_count
+
+                        % Skip filtered leaves.
+                        if ~Filter(iLeaf)
+                            continue;
+                        end
+
+                        % Print line type.
+                          %fprintf(fid,'L ');
+                          % Print leaf parameters.
+                          % Add leaf parent
+                          fprintf(fid,[fmt ' '],ob.leaf_parent(iLeaf,:));
+                          fprintf(fid,[fmt ' '],ob.twig_start_point(iLeaf,:));
+                          fprintf(fid,[fmt ' '],ob.leaf_start_point(iLeaf,:));
+                          fprintf(fid,[fmt ' '],ob.leaf_direction(iLeaf,:));
+                          fprintf(fid,[fmt ' '],ob.leaf_normal(iLeaf,:));
+                          fprintf(fid,fmt,ob.leaf_scale(iLeaf,:));
+
+                          % Print extra columns if present.
+                          if fExtraCols
+                              % Add extra space to separate extra columns.
+                              fprintf(fid, ' ');
+
+                              % Print extra columns.
+                              for iCol = 1:NCol
+                                  fprintf(fid,ft,varargin{iCol}(iLeaf,:));
+                              end
+                        end
+
+                        % End line.
+                        fprintf(fid, '\n');
+                    end
+
                     % Close file stream.
                     fclose(fid);
 
@@ -738,9 +801,9 @@ classdef LeafModelTriangle < LeafModel
     methods(Access=protected)
 
     end
-    
+
     methods(Static)
-        
+
         function fIntersect = LineSegTriIntersect(Origin, Dir, ...
                                                           DistLim, ...
                                                           p1, p2, p3)
@@ -754,11 +817,11 @@ classdef LeafModelTriangle < LeafModel
             % Vectors on triangle plane.
             vec1 = p2 - p1;
             vec2 = p3 - p1;
-            
+
             % Cross product of line segment direction and one vector on
             % plane.
             cross1 = cross(Dir,vec2);
-            
+
             % Check if vectors were parallel.
             proj1  = dot(vec1,cross1);
 
@@ -766,34 +829,34 @@ classdef LeafModelTriangle < LeafModel
             if abs(proj1) < eps
                 return;
             end
-            
+
             % Vector from triangle corner to segment origin.
             op1 = Origin - p1;
             cross2 = cross(op1,vec1);
-            
+
             % Barycentric coordinates of a line parallel to the line
             % segment on the plane defined by the two triangle vectors.
             u = dot(op1,cross1) / proj1;
             v = dot(Dir,cross2) / proj1;
-            
+
             % Check if hit point is inside triangle, return false
             % otherwise.
             if u < 0 || v < 0 || u + v > 1
                 return;
             end
-            
+
             % Compute hit distance from line segment origin.
             Dist = dot(vec2,cross2) / proj1;
-            
+
             % Hit occurred if hit distance between limits. Edge hits are
             % discarded as equal operators are not included.
             fIntersect = Dist > 0 && Dist < DistLim;
-            
+
         end
-        
+
         function export_vert_face_obj(Vertices,Faces,d,file)
         % Export vertices and faces in Wavefront OBJ-format.
-            
+
             % Set precision formatter.
             if length(d) > 1
                 ft = ['%' num2str(d(2)) '.' num2str(d(1)) 'g'];
@@ -876,7 +939,7 @@ classdef LeafModelTriangle < LeafModel
 
             end
 
-            % If the file stream was opened in this function, 
+            % If the file stream was opened in this function,
             % close the stream.
             if closefile
                 fclose(fid);
@@ -888,7 +951,7 @@ classdef LeafModelTriangle < LeafModel
             %-
 
         end
-        
+
     end
 
 end
