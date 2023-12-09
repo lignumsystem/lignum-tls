@@ -40,4 +40,5 @@ This repository contains the code for the project: *A TLS based model for assess
 - [ ] Combine different components from previous sections
 - [ ] Analyse results of interest
 - [ ] Compare photosynthetic production to structural metrics of each tree
+- [ ] Study poplar big leaf model (and reimplement)
 
