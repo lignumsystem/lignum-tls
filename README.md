@@ -27,7 +27,7 @@ This repository contains the code for the project: *A TLS based model for assess
 - [ ] Convert ER5 radiation to PAR (unless using modis)
 - [ ] Download PAR data from MODIS from GEE 
 - [ ] Total diffuse radiation
-- [ ] Set up input .txt file for firmament
+- [ ] Set up growing season data input .txt file for firmament
 
 ### Set up photosynthesis model (farquhar)
 - [ ] Make the first implementation of farquhar model in python (check poplar farquhar function)
