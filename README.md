@@ -6,7 +6,7 @@ This repository contains the code for the project: *A TLS based model for assess
 * process-qsms
   * Folder containing qsm processing tools
  
-### Tast list 
+### Task list 
 - [ ] Delete old things in the repository
 - [ ] Original .obj leaf data to .csv
 - [x] Original bracnh data to .csv (works with lignumreader) 
