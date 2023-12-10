@@ -18,9 +18,9 @@ This repository contains the code for the project: *A TLS based model for assess
       
 ### Setting up the lignum tree (test tree 1302)
 - [x] Implemement parallelogram 
-- [ ] Implement parallelogram leaf - Jari
-      - It seems Parallelogram needs to be changed to Kite shape.
-      - Should not be difficult implement basic geometry computations (use existing Triangle if needed).
+- [ ] Implement parallelogram leaf - Jari<br> 
+      It seems Parallelogram needs to be changed to Kite shape.<br>
+      Should not be difficult implement basic geometry computations (use existing Triangle if needed).
 - [x] Read in branch data to lignum tree - Risto
 - [ ] Read in leaf data (without petioles) to lignum structure - Risto + Jari
 - [ ] Visual inspection that leaf/branch data is okay
