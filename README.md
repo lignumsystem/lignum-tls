@@ -52,4 +52,4 @@ By the second week of February
 - [ ] Compare photosynthetic production to structural metrics of each tree
 - [ ] Study poplar big leaf model (and reimplement) no. of leaves could be approx. 8000
 
-By the end of February
+By the end of February, simulations running.
