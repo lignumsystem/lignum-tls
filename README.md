@@ -7,9 +7,9 @@ This repository contains the code for the project: *A TLS based model for assess
 ## Task list 
 
 ### Prelimiary tasks
-- [ ] Delete old things in the repository
-- [ ] Original .obj leaf data to .csv
-- [x] Original bracnh data to .csv (works with lignumreader) 
+- [x] Delete old things in the repository
+- [x] Original .obj leaf data to .csv
+- [x] Original branch data to .csv (works with lignumreader) 
 - [ ] Add branch and leaf convertion scripts
 - [ ] Convert all leaf/branch data to .csv (loop)
 - [ ] Figure out radiation data sharing
