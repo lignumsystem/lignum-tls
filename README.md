@@ -3,8 +3,6 @@
 This repository contains the code for the project: *A TLS based model for assessing crown-level light microenvironments on forest stand productivity*
 
 ## Current folder contents
-* process-qsms
-  * Folder containing qsm processing tools
  
 ## Task list 
 
