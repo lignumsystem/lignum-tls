@@ -24,7 +24,7 @@ This repository contains the code for the project: *A TLS based model for assess
 - [x] Read in branch data to lignum tree - Risto
 - [ ] Read in leaf data (without petioles) to lignum structure - Risto + Jari
 - [ ] Visual inspection that leaf/branch data is okay
-- [ ] If needed, check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise? - Hannah 
+- [x] If needed, check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise? - Hannah 
 
 By the the second week of January
 
