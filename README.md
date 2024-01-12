@@ -12,8 +12,9 @@ This repository contains the code for the project: *A TLS based model for assess
 - [x] Original branch data to .csv (works with lignumreader) 
 - [x] Add branch convertion script
 - [ ] Add leaf conversion script
-- [ ] Convert all leaf/branch data to .csv (loop)
-- [ ] Figure out radiation data sharing
+- [x] Convert all branch data to .csv (loop)
+- [ ] Convert all leaf data to .csv (loop)
+- [ ] Figure out a good data sharing system
       
 ### Setting up the lignum tree (test tree 1302)
 - [x] Implemement parallelogram 
