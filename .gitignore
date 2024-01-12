@@ -36,5 +36,18 @@
 *.csv
 *.pdf
 
+# R files
+*.rdata
+*.rda 
+*.Rhistory
+*.Rapp.history
+
+# Python files
+__pycache__/
+
+# Data files
+*.csv
+*.txt
+
 # Other
 *.DS_Store
