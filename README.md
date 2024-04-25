@@ -20,9 +20,9 @@ This repository contains the code for the project: *A TLS based model for assess
 - [x] Implemement parallelogram 
 - [x] Implemented Kite leaf including XML read and write.
       The final testing can be done when TLS trees with Kite leaves are vailable.
-- [x] Read in branch data to lignum tree - Risto
+- [x] Read in branch data to lignum tree - Risto   
       - Hannah: Risto should have the Tree 1302, branching data a data csv file.
-- [ ] Read in leaf data (without petioles) to lignum structure - Risto + Jari
+- [ ] Read in leaf data (without petioles) to lignum structure - Risto + Jari   
       - Hannah: Risto should have the Tree 1302, leaf data csv file.
 - [ ] Visual inspection that leaf/branch data is okay
 - [x] If needed, check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise? - Hannah 
