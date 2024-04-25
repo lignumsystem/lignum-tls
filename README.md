@@ -31,9 +31,9 @@ This repository contains the code for the project: *A TLS based model for assess
 Thus: there should be data files available to construct the Tree 1302 with leaves in Lignum.
 
 ### Setting up the Firmament model
-- [ ] Subdaily time step needed (e.g. 60 minute time steo)
+- [ ] Subdaily time step needed (e.g. 60 minute time step)
 - [x] Input data: ERA5 hourly/ MODIS PAR (https://developers.google.com/earth-engine/datasets/catalog/ECMWF_ERA5_LAND_HOURLY#bands OR https://developers.google.com/earth-engine/datasets/catalog/MODIS_061_MCD18C2)
-- [ ] Convert ERA5 radiation to PAR (unless using modis)
+- [ ] Convert ERA5 radiation to PAR (unless using MODIS)
 - [ ] Download PAR data from MODIS satellite hosted by GEE (Google Earth Engine) 
 - [ ] PAR data is *both* diffuse *and* direct radiation. Can this be distributed in Firmament as SOC (Standard overcast sky)?
 - [ ] Define growing season for the tree species
