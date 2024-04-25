@@ -42,10 +42,11 @@ Hannah will make the files available in GitHub for the test tree and Firmament b
 - [ ] Two options for Farquhar model, Optimality and the one in poplar.
 - [ ] Make the first implementations of Farquhar models in Python (check poplar farquhar function)
 - [ ] Use input file for Firmament
+- [ ] Other data and parameters for Farquhar models
 - [ ] Check data before running function/plotting
 - [ ] Visualise results with matplotlib (3d mesh plot)
 - [ ] Reimplement in lignum with C++ (Jari + Hannah)
-- [ ] Use individual leaves (test tree 1302 has about 5000 leaves)
+- [ ] Use individual leaves in radiation calculations (test tree 1302 has about 5000 leaves)
 - [ ] If time allows compare with the use of leaf area sums and "average" leaf direction in voxels.
 
 Before midsummer but as soon as possible.
