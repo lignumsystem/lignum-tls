@@ -25,10 +25,10 @@ This repository contains the code for the project: *A TLS based model for assess
 - [ ] Read in leaf data (without petioles) to lignum structure - Risto + Jari   
       - Hannah: Risto should have the Tree 1302, leaf data csv file.   
 - [ ] Visual inspection that leaf/branch data is okay
-- [x] Check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise? - Hannah    
-       - Kite points run clockwise, the first being the leaf base (i.e. nadir point, petiole end)         
+- [x] Check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise?
+      - Hannah: Kite points run clockwise, the first being the leaf base (i.e. nadir point, petiole end)         
 
-Thus, there should be data files available to construct the Tree 1302 with leaves.
+Thus: there should be data files available to construct the Tree 1302 with leaves in Lignum.
 
 ### Setting up the Firmament model
 - [ ] Subdaily time step needed (e.g. 60 minute time steo)
