@@ -42,7 +42,7 @@ Thus, there should be data files available to construct the Tree 1302 with leave
 Hannah will make the files available in GitHub for the test tree and Firmament by the end of the week 18 after Wappu.
 
 ### Set up photosynthesis model (Farquhar)
-- [ ] Two options for Farquhar model, Optimality and the one in poplar.
+- [ ] Two options for Farquhar model: Optimality and the one in poplar.
 - [ ] Make the first implementations of Farquhar models in Python (check poplar farquhar function)
 - [ ] Use input file for Firmament
 - [ ] Other data and parameters for Farquhar models
