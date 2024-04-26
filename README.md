@@ -28,7 +28,7 @@ This repository contains the code for the project: *A TLS based model for assess
 - [x] Check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise?
       - Hannah: Kite points run clockwise, the first being the leaf base (i.e. nadir point, petiole end)         
 
-Thus: there should be data files available to construct the Tree 1302 with leaves in Lignum.
+Thus: there should be data files available to construct the Tree 1302 with Kite leaves in Lignum.
 
 ### Setting up the Firmament model
 - [ ] Subdaily time step needed (e.g. 60 minute time step)
