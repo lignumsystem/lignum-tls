@@ -32,9 +32,14 @@
 *.app
 
 # Data files
-*.txt
-*.csv
-*.pdf
+*.shp
+*.geojson
+*.shp
+*.shx
+*.dbf
+*.prj
+*.cpg
+*.tif
 
 # R files
 *.rdata
@@ -44,10 +49,6 @@
 
 # Python files
 __pycache__/
-
-# Data files
-*.csv
-*.txt
 
 # Other
 *.DS_Store
