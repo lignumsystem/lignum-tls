@@ -1,0 +1,15 @@
+## Files
+
+### Tree data
+* lm_1302.obj: FANNI leaf geometry
+* wytham_winter_1302-0.2-0.22-4-0.04-0.044-3-5-1-0.mat: QSM
+* wytham_winter_1302.ply: point cloud (branches)
+
+### Environmental data
+* Clim_export.csv: temperature (degrees C)
+  	       	   precipitation
+* Elevation_Export.csv: elevation
+* noaa_co2.csv: atmospheric co2 concentration (ppm)
+* PAR_export.csv: par_daily
+		  par_daily_diff
+		  rsdn_daily
