@@ -10,8 +10,8 @@ The main steps for reading TLS data to LIGNUM are 1.QSM generation, 2. Leaf gene
 ```mermaid
 ---
 config:
-  look: Hand-Drawn
-  theme: forest
+  look: neo
+  theme: default
 ---
 flowchart TD
   A[Branch PC] --> X[TreeQSM] --> |qsm2csv.py| C{QSMReader}
