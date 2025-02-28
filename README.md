@@ -2,6 +2,22 @@
 
 A lignum project using TLS data to simulate crown-level GPP.
 
+## Table of Contents
+- [LIGNUM-tls](#lignum-tls)
+  - [Table of Contents](#table-of-contents)
+  - [Aims](#aims)
+  - [Task list](#task-list)
+    - [Open questions](#open-questions)
+    - [Preliminary tasks](#preliminary-tasks)
+    - [Setting up the lignum tree (test tree 1302)](#setting-up-the-lignum-tree-test-tree-1302)
+    - [Setting up the firmament model](#setting-up-the-firmament-model)
+    - [Setting up the photosynthesis model (Poplar Farquhar)](#setting-up-the-photosynthesis-model-poplar-farquhar)
+    - [Setting up the main loop in lignum](#setting-up-the-main-loop-in-lignum)
+    - [Further analysis](#further-analysis)
+    - [Writing](#writing)
+  - [Workflow overview](#workflow-overview)
+  - [\`\`\`mermaid](#mermaid)
+  - [theme: default](#theme-default)
 ## Aims
 
 1. Read TLS tree
@@ -12,7 +28,7 @@ A lignum project using TLS data to simulate crown-level GPP.
 
 ## Task list
 
-### Open questions :monocle_face:
+### Open questions
 
 :pushpin: Should the leaf implementation use kites or trianlges? Both shapes can be extrated from .obj files.
 
@@ -20,7 +36,9 @@ A lignum project using TLS data to simulate crown-level GPP.
 
 :pushpin: Available PAR data is *both* diffuse *and* direct radiation. Can this be distributed in Firmament as SOC (Standard overcast sky)?
 
-### Prelimiary tasks
+:monocle_face:
+
+### Preliminary tasks
 
 - [x] Delete old things in the repository
 - [x] Original .obj leaf data to .csv
@@ -107,3 +125,23 @@ A lignum project using TLS data to simulate crown-level GPP.
 - [ ] First draft
 
 :star: ***Outcomes: Finished project :100:*** :star:
+
+## Workflow overview
+
+```mermaid
+---
+config:
+  look: neo
+  theme: default
+---
+graph TB
+sq[Tree geometry] --> ci((Test Tree 1302))
+sq2[Radiation regime] --> ci((Test Tree 1302))
+sq3[Physiology] --> ci((Test Tree 1302))
+
+subgraph Research questions
+    M[**Does architectural efficiency vary with tree size and canopy position?**]
+    M --> A[*H1.* Optimal crown architecture is driven by local light conditions]
+    M --> B[*H2.* Light interception efficiency decreases with increasing tree size]
+end
+
