@@ -28,12 +28,12 @@
 # Divide the command line into practical parts for debugging from Arguments -> '+'.
 # -------------------------------------------------------------------------------
 # Graphviz
-# Generate Graphviz files showing the dependency graph between the targets and libraries in a project:
+# Generate dependency graph between the targets and libraries in the lignum-tls project:
 # mkdir release
 # cd release
 # mkdir graphviz
-# cmake .. -DCMAKE_BUILD_TYPE=Release --graphviz=release/lignum-tls.dot
-# Create pdf file of project dependencies:
+# cmake .. -DCMAKE_BUILD_TYPE=Release --graphviz=graphviz/lignum-tls.dot
+# Create pdf file
 # dot -Kneato -Goverlap=scale -Tpdf -o lignum-tls.pdf graphviz/lignum-tls.dot
 # --------------------------------------------------------------------------------
 cmake_minimum_required(VERSION 3.30)
@@ -63,29 +63,27 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
   include(../Graphics/lib/Visual.cmake)
 endif()
 
-#find_package(HDF5 COMPONENTS C CXX HL REQUIRED)
-
 if (CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
   message("SYSTEM: Apple Darwin platform")
-# The following line finds Qt4 headers and libraries, qmake must be in PATH
-# find_package(Qt4 COMPONENTS QtOpenGL QtXml QtGui QtCore REQUIRED)
-# The following line finds Qt5 headers and libraries, qmake must be in PATH
-  find_package(Qt5 COMPONENTS Xml Core  REQUIRED)	    
+  # The following line finds Qt4 headers and libraries, qmake must be in PATH
+  # find_package(Qt4 COMPONENTS QtOpenGL QtXml QtGui QtCore REQUIRED)
+  # The following line finds Qt5 headers and libraries for Xml and Core packages
+  # with C/C++ language bindings. The HL component means High Level bindings. 
+  find_package(Qt5 COMPONENTS Xml Core  REQUIRED)
+  # HSF5 may be uselful when collecting simulation results
+  find_package(HDF5 COMPONENTS C CXX HL REQUIRED)
+  # Simple visualization in macOS 
   find_package(OpenGL REQUIRED) 
   # cmake 3.23 output erroneusly prints 'glut not found'. It is found. 
   find_package(GLUT REQUIRED)
 elseif(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
   message("SYSTEM: Linux platform")
-#  find_package(HDF5 COMPONENTS C CXX HL REQUIRED)
+  find_package(HDF5 COMPONENTS C CXX HL REQUIRED)
   find_package(Qt5 COMPONENTS Xml Core  REQUIRED)
 else()
   message(${CMAKE_HOST_SYSTEM_NAME} " not supported")
   message(FATAL_ERROR "Exiting cmake")
 endif()
-
-#find_package(OpenGL REQUIRED)
-# cmake 3.23 output erroneusly prints 'glut not found'. It is found. 
-#find_package(GLUT REQUIRED)
 
 #Add more source files here as they are needed
 set(SOURCE_FILES main.cc
@@ -101,13 +99,13 @@ target_include_directories(lignum-tls PUBLIC . include
   ${CMAKE_CURRENT_LIST_DIR}/../QSMreader/include
 )
 
-# This add_dependencies for lignum-tls seem to generate time stamp based necessary automatic rebuilds
+# This add_dependencies for lignum-tls seem to generate necessary time stamps necessary for automatic rebuilds
 # of 'lignum-tls' and 'lignum-core' projects for Unix Makefile system, i.e. if a file is changed then
 # that file and files depending on it will be recompiled with 'make'.
-# Note: 'make clean' is required first before 'make'.
+# Note: 'make clean' is required  before 'make'.
 #
-# Xcode project created for 'lignum-tls' can compile and rebuild 'lignum-tls' (Product in Xcode) when needed.
-# However 'lignum-core' dependency (Targets in Xcode) is compiled once ignoring after
+# Note: Xcode project created for 'lignum-tls' can compile and rebuild 'lignum-tls' (Product in Xcode) when needed.
+# However 'lignum-core' dependencies (Targets in Xcode) is compiled just once ignoring after
 # that time stamp based changes in Lignum core project files when rebuilding lignum-tls.
 add_dependencies(lignum-tls lignum-core)
 
@@ -116,7 +114,8 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
   message("------------")
   message("Apple macOS (Darwin) libraries")
   target_link_libraries(lignum-tls
-#   HDF5::HDF5
+    # Uncomment if HDF5 is put to use
+    # HDF5::HDF5
     Qt5::Xml Qt5::Core
     GLUT::GLUT OpenGL::GLU OpenGL::GL
     Visual  sky LGM cxxadt
@@ -126,7 +125,8 @@ elseif(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
   message("------------")
   message("Linux libraries")
   target_link_libraries(lignum-tls
-#    HDF5::HDF5 
+    # Uncomment if HDF5 is put to use
+    # HDF5::HDF5 
     Qt5::Xml Qt5::Core
     sky LGM cxxadt
   )
