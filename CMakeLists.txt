@@ -118,7 +118,7 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
     # HDF5::HDF5
     Qt5::Xml Qt5::Core
     GLUT::GLUT OpenGL::GLU OpenGL::GL
-    Visual  sky LGM cxxadt
+    Visual  sky LGM cxxadt voxel
   )
 elseif(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
   message("lignum-tls")
@@ -128,7 +128,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
     # Uncomment if HDF5 is put to use
     # HDF5::HDF5 
     Qt5::Xml Qt5::Core
-    sky LGM cxxadt
+    sky LGM cxxadt voxel
   )
   message("REMEMBER to type \"make install\" to install lignum-tls") 
 else()
