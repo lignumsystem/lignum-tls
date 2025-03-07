@@ -68,7 +68,9 @@ namespace LignumTLS{
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return  Carboxylation rate as minimum of \f$\min\{W_c,W_j\}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     double Vc(double T, double Q)const;
-    ///\brief Photosynthesis CO2 compensation point (no daytime respiration), \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
+    ///\brief The \f$\Gamma^\ast\f$ function, \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
+    ///
+    ///The \f$\Gamma^\ast\f$ function for example in Lu et al., 1991. Photosynthesis CO2 compensation point (no daytime respiration). 
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\return CO2 compensation point of photosynthesis in the absence of daytime respiration, \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
     double Gammastar(double T)const;
