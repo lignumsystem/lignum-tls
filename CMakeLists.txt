@@ -87,6 +87,7 @@ endif()
 
 #Add more source files here as they are needed
 set(SOURCE_FILES main.cc
+  src/Farquhar.cc
 )
 
 # Main target, the executable 'lignum-tls'.

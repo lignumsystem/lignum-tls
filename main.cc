@@ -1,8 +1,10 @@
 #include <Lignum.h>
-#include <QSMreader.h>
 #include <VoxelSpace.h>
-
 #include <XMLTree.h>
+#include <QSMreader.h>
+#include <Farquhar.h>
+
+using namespace LignumTLS;
 
 void Usage() {
   cout << endl;
@@ -14,7 +16,9 @@ void Usage() {
 
 
 int main(int argc, char** argv) {
-
+  //Photosynthesis model
+  Farquhar P;
+  
   if(argc < 2) {
     Usage();
     exit(0);
