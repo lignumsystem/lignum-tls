@@ -43,8 +43,11 @@ namespace LignumTLS{
 	     double Jmax25_p=88.01, double Sj_p=650, double Dj_p=2e5):
       Kc(Kc_p),Ko(Ko_p),Ca(Ca_p),Oa(Oa_p),Vcmax25(Vcmax25_p),Rd25(Rd25_p),R(R_p),Q10(Q10_p),Jmax25(Jmax25_p),Sj(Sj_p),Dj(Dj_p){}
     ///\brief The net CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
-    ///\important This is the main method that returns the net CO2 assimilation rate, i.e. photosynthesis minus respiration
-    ///\param T Tempeature, \f$\mathrm{^\circ C}\f$
+    ///\important This is the main method that returns the net CO2 assimilation rate, \f$A_l\f$, i.e. photosynthesis minus respiration:
+    ///\f[
+    ///A_l = (1-\Gamma^\ast/C_i)V_c-Rd
+    ///\f]
+    ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return The net CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\note To convert the net assimilation \e rate to the net CO2 assimilation of a leaf multiply
@@ -56,8 +59,7 @@ namespace LignumTLS{
     ///\return The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2} s{^-1}}\f$
     ///\note The equation is corrected as  in Long 1991, Appendix 1 (Eq. 4): \f$\frac{V_\mathit{cmax}C_i}{C_i+K_c(1+O_i/K_o)}\f$.
     ///The error in Lu et al., 2011, Appendix 3 (Eq. A3-7) was in the denominator: \f$O_i*K_o\f$.
-    ///For the first, carboxylation return values would negative
-    ///and the secondly, the units used would go wrong.
+    ///For the first, CO2 assimilation rate return values in Farquhar::Al() would be negative. Secondly, the units used would go wrong.
     ///\sa Farquhar::Wj
     double Wc(double T)const;
     ///\brief The RuP2 \e limited rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
