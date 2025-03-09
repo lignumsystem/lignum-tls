@@ -50,6 +50,7 @@ namespace LignumTLS{
     ///\note To convert the net assimilation \e rate to the net CO2 assimilation of a leaf multiply
     ///      the assimilation rate by the leaf area and the time step length in seconds.
     double Al(double T, double Q)const;
+  protected:
     ///\brief The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\return The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2} s{^-1}}\f$
@@ -58,7 +59,6 @@ namespace LignumTLS{
     ///For the first, carboxylation return values would negative
     ///and the secondly, the units used would go wrong.
     ///\sa Farquhar::Wj
-  protected:
     double Wc(double T)const;
     ///\brief The RuP2 \e limited rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
