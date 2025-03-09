@@ -38,7 +38,7 @@ namespace LignumTLS{
     ///\param Jmax25_p  Maximum electron transport at 25 \f$\mathrm{^\circ C}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param Sj_p Electron transport temperature response parameter (entropy term), \f$\mathrm{J\cdot K^{-1} mol^{-1}}\f$
     ///\param Dj_p Curvature parameter (energy of thermal deactivation)  \f$\mathrm{J\cdot mol^{-1}}\f$
-    Farquhar(double Kc_p=460.0, double Ko_p=22.0, double Ca_p=380.0, double Oa_p=210.0,
+    Farquhar(double Kc_p=460.0, double Ko_p=330.0, double Ca_p=380.0, double Oa_p=210.0,
 	     double Vcmax25_p=42.12, double Rd25_p=1.09, double R_p=8.314, double Q10_p=1.78,
 	     double Jmax25_p=88.01, double Sj_p=650, double Dj_p=2e5):
       Kc(Kc_p),Ko(Ko_p),Ca(Ca_p),Oa(Oa_p),Vcmax25(Vcmax25_p),Rd25(Rd25_p),R(R_p),Q10(Q10_p),Jmax25(Jmax25_p),Sj(Sj_p),Dj(Dj_p){}
@@ -50,17 +50,20 @@ namespace LignumTLS{
     ///\note To convert the net assimilation \e rate to the net CO2 assimilation of a leaf multiply
     ///      the assimilation rate by the leaf area and the time step length in seconds.
     double Al(double T, double Q)const;
-  protected:
     ///\brief The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\return The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2} s{^-1}}\f$
+    ///\note The equation is corrected as  in Long 1991, Appendix 1 (Eq. 4): \f$\frac{V_\mathit{cmax}C_i}{C_i+K_c(1+O_i/K_o)}\f$.
+    ///The error in Lu et al., 2011, Appendix 3 (Eq. A3-7) was in the denominator: \f$O_i*K_o\f$.
+    ///For the first, carboxylation return values would negative
+    ///and the secondly, the units used would go wrong.
     ///\sa Farquhar::Wj
+  protected:
     double Wc(double T)const;
     ///\brief The RuP2 \e limited rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return The RuP2 \e limited rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
-    ///\note The equation is also in Long 1991, Appendix 1 (Eq. 4)
     ///\sa Farquhar::Wc
     double Wj(double T, double Q)const;
     ///\brief Carboxylation rate, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$

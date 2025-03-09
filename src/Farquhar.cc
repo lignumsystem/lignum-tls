@@ -16,7 +16,7 @@ namespace LignumTLS{
     double ci = Ci(T);
     double vcmax = Vcmax(T);
     double oi = Oi(T);
-    return (ci*vcmax)/(ci+Kc*(1.0+oi*Ko));
+    return (ci*vcmax)/(ci+Kc*(1.0+oi/Ko));
   }
 
   double Farquhar::Wj(double T, double Q)const
