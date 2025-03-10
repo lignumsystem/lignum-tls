@@ -19,11 +19,11 @@ namespace LignumTLS{
   /// -# Yin et al. 2004. Extension of a biochemical model for the generalized stoichiometry of electron transport limited C3 photosynthesis.
   /// -# von Caemmerer. 2013. Steady-state models of photosynthesis.
   ///
-  ///Albeit different approaches and perspectives on the Farquhar photosynthesis model
+  ///Albeit different perspectives on the Farquhar photosynthesis model
   ///they share similar development of equations and notations.
   ///
-  ///This implementation follows in variable and function names the notation as well as default parameter values
-  ///used in Lu at al., 2011.
+  ///This implementation follows the notation in variable and function names as well as default parameter values
+  ///in Lu at al., 2011.
   class Farquhar{
   public:
     ///\brief Constructor with generic and application specific parameters
@@ -56,10 +56,11 @@ namespace LignumTLS{
   protected:
     ///\brief The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
-    ///\return The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2} s{^-1}}\f$
-    ///\note The equation is corrected as  in Long 1991, Appendix 1 (Eq. 4): \f$\frac{V_\mathit{cmax}C_i}{C_i+K_c(1+O_i/K_o)}\f$.
-    ///The error in Lu et al., 2011, Appendix 3 (Eq. A3-7) was in the denominator: \f$O_i*K_o\f$.
-    ///For the first, CO2 assimilation rate return values in Farquhar::Al() would be negative. Secondly, the units used would go wrong.
+    ///\return The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s{^-1}}\f$
+    ///\note The equation used is as  in Long 1991, Appendix 1 (Eq. 4): \f$\frac{V_\mathit{cmax}C_i}{C_i+K_c(1+O_i/K_o)}\f$.
+    ///The erratum in Lu et al., 2011, Appendix 3 (Eq. A3-7) is in the denominator multiplication: \f$O_i*K_o\f$.
+    ///For the first, with the erratum CO2 assimilation rate return values in Farquhar::Al() would be negative.
+    ///Secondly, the units used would be incorrect.
     ///\sa Farquhar::Wj
     double Wc(double T)const;
     ///\brief The RuP2 \e limited rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
@@ -72,6 +73,7 @@ namespace LignumTLS{
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return  Carboxylation rate as minimum of \f$\min\{W_c,W_j\}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
+    ///\sa Farquhar::Wc Farquhar::Wj
     double Vc(double T, double Q)const;
     ///\brief The \f$\Gamma^\ast\f$ function, \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
     ///
