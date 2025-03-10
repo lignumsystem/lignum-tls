@@ -55,9 +55,9 @@ To generate the HTML documentation type:
 	
 The file *error.txt* contains errors and alerts found in comments and markdown (*.md*) files.
 
-## Cython
-The class Farquhar has a simple Cython interface that allows to build Python test program 
-in order to verify the correctness and study the behaviour of the Farquhar model. 
+## Python package
+The class Farquhar has a simple Python interface (package) that allows to use the Python test program 
+`farquharplot.py` to verify the correctness and to study the behaviour of the implemented Farquhar model. 
 Create a Python virtual environment, install required python packages and build the `farquhar`
 Python package:
 	
@@ -67,4 +67,8 @@ Python package:
 	pip install -r requirements.txt
 	python3 setup.py build_ext --inplace
 	
-The test program is to appear.
+To run the test program:
+	
+	python3 farquharplot.py 
+	
+Simple interactive windows shows contour plot of the net CO2 assimilation rate by a leaf.
