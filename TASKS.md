@@ -5,7 +5,7 @@ A lignum project using TLS data to simulate crown-level GPP.
 ## Table of Contents
 - [LIGNUM-tls](#lignum-tls)
   - [Table of Contents](#table-of-contents)
-  - [Aims](#aims)
+  - [Simulation framework (formerly Aims)](#simulation-framework)
   - [Task list](#task-list)
     - [Open questions](#open-questions)
     - [Preliminary tasks](#preliminary-tasks)
@@ -18,13 +18,32 @@ A lignum project using TLS data to simulate crown-level GPP.
   - [Workflow overview](#workflow-overview)
   - [\`\`\`mermaid](#mermaid)
   - [theme: default](#theme-default)
-## Aims
 
+## Simulation framework
+Repeat for all TLS trees:
 1. Read TLS tree
-2. Calculate radiation environment
-3. Calculate photosynthesis
-4. Run lignum
-5. Further analysis
+2. Read the meteorological data
+3. Create voxel space around the tree 
+
+For each time step for the chosen time period:
+4  Configure Firmament using the meteorological data 
+5. Calculate radiation environment / absorbed radiation for each leaf
+6. Calculate photosynthesis (Farquhar model implemented)
+7. Collect necessary data from the tree
+   - Hannah could design data tables necessary, HDF5 accepts N-dimensional tables.
+   
+After simulation:
+9. Save the collected tree data to an HDF5 file
+10. Save VoxelSpace status to an HDF5 file (Voxels with leaves)
+11. Save other simulation related data required to an HDF5 file (to be able to reproduce results)
+
+Finally:
+11. Analysis of the simulations to answer questions in the  Workflow overview (see the figure in the end) 
+
+Risto's outline for the main program sounds reasonable. The main loop should be rather straightforward
+because we are not simulation growth, but the trees are static (?). We might be able to keep the main program 
+clean by using generic functions (i.e. ForEach, Accumulate, AccumulateDown, PropagetUp) and hiding details 
+behind functions (for example finding the bounding box for a tree and resizing the voxel space).
 
 ## Task list
 
