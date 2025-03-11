@@ -26,6 +26,7 @@ Repeat for all TLS trees:
 3. Create voxel space around the tree 
 
 For each time step for the chosen time period:
+
 4.  Configure Firmament using the meteorological data 
 5. Calculate radiation environment / absorbed radiation for each leaf
 6. Calculate photosynthesis (Farquhar model implemented)
