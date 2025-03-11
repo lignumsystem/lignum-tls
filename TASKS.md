@@ -21,6 +21,7 @@ A lignum project using TLS data to simulate crown-level GPP.
 
 ## Simulation framework
 Repeat for all TLS trees:
+
 1. Read TLS tree
 2. Read the meteorological data
 3. Create voxel space around the tree 
@@ -34,11 +35,13 @@ For each time step for the chosen time period:
    - Hannah could design data tables necessary, HDF5 accepts N-dimensional tables.
    
 After simulation:
+
 9. Save the collected tree data to an HDF5 file
 10. Save VoxelSpace status to an HDF5 file (Voxels with leaves)
 11. Save other simulation related data required to an HDF5 file (to be able to reproduce results)
 
 Finally:
+
 11. Analysis of the simulations to answer questions in the  Workflow overview (see the figure in the end) 
 
 Risto's outline for the main program sounds reasonable. The main loop should be rather straightforward
