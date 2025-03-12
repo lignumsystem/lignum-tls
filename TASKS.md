@@ -55,10 +55,13 @@ behind functions (for example finding the bounding box for a tree and resizing t
 
 :pushpin: Should the leaf implementation use kites or trianlges? Both shapes can be extrated from .obj files.
 - RESOLVED: Kite leaves
+- 
 :pushpin: Modify Lignum Workbench to show kite leaves? (If kites are the way forward).
 - DONE: Kite leaves shown
+- 
 :pushpin: Available PAR data is *both* diffuse *and* direct radiation. Can this be distributed in Firmament as SOC (Standard overcast sky)?
 - NO need to distribute as SOC: Firmament has methods for direct (sun) radiation and its direction. Sun position can be obtained e.g.from https://soltrack.sourceforge.net if not in the data.
+- 
 :monocle_face:
 
 ### Preliminary tasks
