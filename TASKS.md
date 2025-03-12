@@ -54,11 +54,11 @@ behind functions (for example finding the bounding box for a tree and resizing t
 ### Open questions
 
 :pushpin: Should the leaf implementation use kites or trianlges? Both shapes can be extrated from .obj files.
-
+- RESOLVED: Kite leaves
 :pushpin: Modify Lignum Workbench to show kite leaves? (If kites are the way forward).
-
+- DONE: Kite leaves shown
 :pushpin: Available PAR data is *both* diffuse *and* direct radiation. Can this be distributed in Firmament as SOC (Standard overcast sky)?
-
+- NO need to distribute as SOC: Firmament has methods for direct (sun) radiation and its direction. Sun position can be obtained e.g.from https://soltrack.sourceforge.net if not in the data.
 :monocle_face:
 
 ### Preliminary tasks
@@ -72,7 +72,7 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [ ] Convert all leaf data to .csv
 - [x] Figure out a good data sharing system (Google drive chosen)
 - [ ] Add GEE data extraction scripts
-- [ ] Add skeleton project to [lignum-system](https://github.com/lignumsystem) to be used by lignum-tls @jari
+- [x ] Add skeleton project to [lignum-system](https://github.com/lignumsystem) to be used by lignum-tls @jari
 - [ ] Add all data for test tree to github project
 - [ ] Add workflow figure to README
 
@@ -85,7 +85,7 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [x] Read in branch data to lignum tree - Risto
 - [x] Read in leaf data (without petioles) to lignum structure @Risto @Jari
 - [ ] Visual inspection that leaf/branch data is okay
-  - [ ] Kites not currently visible in WB, but triangles are. Find a way to visualise kite shape.
+  - [x ] Kites not currently visible in WB, but triangles are. Find a way to visualise kite shape.
 - [x] Check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise?
       - Hannah: anti-clockwise
 
@@ -122,6 +122,7 @@ behind functions (for example finding the bounding box for a tree and resizing t
 ### Setting up the main loop in lignum
 
 - [ ] Combine all components from previous sections (structure, radiation, photosynthesis)
+  - [ ] Risto: Write a ForEach functor that assigns radiation values from VoxelSpace for all leaves
 - [ ] Run simulation
 - [ ] Export results using `EvaluateTree`
 - [ ] Repeat for all trees
