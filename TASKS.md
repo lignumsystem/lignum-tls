@@ -61,7 +61,9 @@ behind functions (for example finding the bounding box for a tree and resizing t
   
 :pushpin: Available PAR data is *both* diffuse *and* direct radiation. Can this be distributed in Firmament as SOC (Standard overcast sky)?
 - NO need to distribute as SOC: Firmament has methods for direct (sun) radiation and its direction. Sun position can be obtained e.g.from https://soltrack.sourceforge.net if not in the data.
-  
+
+:pushpin: Should lignum-tls have own TreeSegment and Bud instead of HwQSMSegment_k and HwQSMBud_k?
+
 :monocle_face:
 
 ### Preliminary tasks
@@ -125,7 +127,7 @@ behind functions (for example finding the bounding box for a tree and resizing t
 ### Setting up the main loop in lignum
 
 - [ ] Combine all components from previous sections (structure, radiation, photosynthesis)
-  - [ ] Risto: Write a ForEach functor that assigns radiation values from VoxelSpace for all leaves
+  - [x] Risto: Write a ForEach functor that assigns radiation values from VoxelSpace for all leaves
 - [ ] Run simulation
 - [ ] Export results using `EvaluateTree`
 - [ ] Repeat for all trees
