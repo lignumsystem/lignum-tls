@@ -2,6 +2,7 @@
 #include <VoxelSpace.h>
 #include <XMLTree.h>
 #include <QSMreader.h>
+#include <Lignum-tls.h>
 #include <Farquhar.h>
 
 using namespace LignumTLS;
@@ -45,9 +46,9 @@ int main(int argc, char** argv) {
 
   //Note that the luminosity of the upper hemisphere (=incoming radiation)
   //is included in VoxelSpace
-  Firmament sky(9, 12, 1200.0);   //(no_incl, no_azim, rad_plane)
+  Firmament sky(6, 8, 1200.0);   //(no_incl, no_azim, rad_plane)
   //Radiation value is only for example calculation
-  double box_xyz = 0.2;
+  double box_xyz = 0.4;
   //Only box side lengths box_xyz and sky are here important
   VoxelSpace vs(Point(0,0,0),Point(1.0,1.0,1.0), box_xyz, box_xyz, box_xyz,
 		5, 5, 5, sky);
@@ -74,9 +75,15 @@ int main(int argc, char** argv) {
 
   bool use_border_forest = false;
   bool own_box_shading = false;
-  vs.calculateTurbidLight(use_border_forest, own_box_shading);  
+  vs.calculateTurbidLight(use_border_forest, own_box_shading);
 
-  vs.writeVoxBoxesToFile("box_data.txt", false);  //Write only boxes with foliage
+  //vs.writeVoxBoxesToFile("box_data.txt", false);  //Write only boxes with foliage
+
+  //Record Qin values from voxelboxes to leaves
+
+  ForEach(lignum_tree_hw_k, SetQinInLeaves(&vs) );
+
+  
 
   return 0;
 }
