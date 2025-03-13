@@ -24,7 +24,6 @@ class SetQinInLeaves {
 	VoxelBox box =  space->getVoxelBox(p);
 	SetValue(**Il, LGAQin, box.getQin());
 	vector<int> ii = space->getBoxIndexes(p);
-	cout << "X Y Z Qin " << ii[0] << " " << ii[1] << " " << ii[2] << " " << box.getQin() << endl;
       }
     }
     return tc;
