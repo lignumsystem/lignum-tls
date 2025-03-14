@@ -20,29 +20,39 @@ A lignum project using TLS data to simulate crown-level GPP.
   - [theme: default](#theme-default)
 
 ## Simulation framework
-Repeat for all TLS trees:
+### Repeat for all TLS trees:
 
 1. Read TLS tree
+   - Can be done
 2. Read the meteorological data
-3. Create voxel space around the tree 
+   - Use poplar weather data file for the time being?<br>
+     (Until the meterological data becomes available)
+3. Create voxel space around the tree
+   - Can be done
 
-For each time step for the chosen time period:
+### For each time step for the chosen time period:
 
-4. Configure Firmament using the meteorological data 
+4. Configure Firmament using the meteorological data
+   - Use poplar weather data temporarily?
 5. Calculate radiation environment / absorbed radiation for each leaf
-6. Calculate photosynthesis (Farquhar model implemented)
+6. Calculate photosynthesis
+   - Farquhar model implemented
+   - Hannah could establish species specific parameters
 7. Collect necessary data from the tree
-   - Hannah could design data tables necessary, HDF5 accepts N-dimensional tables.
+   - Hannah could design data tables necessary
+   - 2D and 3D tables/matrices can be saved to HDF5 file (HDF5 accepts N-dimensional tables).
    
-After simulation:
+### After simulation:
 
-9.  Save the collected tree data to an HDF5 file
-10. Save VoxelSpace status to an HDF5 file (Voxels with leaves)
-	- RESOLVED: Framework to collect VoxelSpace data implented. Extend the implementation as necessary
-	(most likely by adding fields to the struct VoxelSpaceData). 
-11. Save other simulation related data required to an HDF5 file (to be able to reproduce results)
+8. Save the collected tree data to an HDF5 file
+   - 2D and 3D tables/matrices can be saved to HDF5 file
+9. Save VoxelSpace status to an HDF5 file (Voxels with leaves)
+   - RESOLVED: Framework to collect VoxelSpace data implemented.<br>
+     Extend the implementation as necessary (most likely just by adding data fields to the struct VoxelSpaceData).
+   - Is there a need to save VoxeSpace status during simulation?
+10. Save other simulation related data required (configuration files etc.) to an HDF5 file (to be able to reproduce results)
 
-Finally:
+### Finally:
 
 11. Analysis of the simulations to answer questions in the  Workflow overview (see the figure in the end) 
 
