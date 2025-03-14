@@ -72,7 +72,7 @@ if (CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
   find_package(Qt5 COMPONENTS Xml Core  REQUIRED)
   # HSF5 may be uselful when collecting simulation results
   find_package(HDF5 COMPONENTS C CXX HL REQUIRED)
-  # Simple visualization in macOS 
+  # Simple visualization tool in macOS 
   find_package(OpenGL REQUIRED) 
   # cmake 3.23 output erroneusly prints 'glut not found'. It is found. 
   find_package(GLUT REQUIRED)
@@ -116,7 +116,7 @@ if(CMAKE_HOST_SYSTEM_NAME MATCHES "Darwin")
   message("Apple macOS (Darwin) libraries")
   target_link_libraries(lignum-tls
     # Uncomment if HDF5 is put to use
-    # HDF5::HDF5
+    HDF5::HDF5
     Qt5::Xml Qt5::Core
     GLUT::GLUT OpenGL::GLU OpenGL::GL
     Visual  sky LGM cxxadt voxel
@@ -127,7 +127,7 @@ elseif(CMAKE_HOST_SYSTEM_NAME MATCHES "Linux")
   message("Linux libraries")
   target_link_libraries(lignum-tls
     # Uncomment if HDF5 is put to use
-    # HDF5::HDF5 
+    HDF5::HDF5 
     Qt5::Xml Qt5::Core
     sky LGM cxxadt voxel
   )
