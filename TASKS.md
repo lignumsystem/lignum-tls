@@ -28,7 +28,7 @@ Repeat for all TLS trees:
 
 For each time step for the chosen time period:
 
-4.  Configure Firmament using the meteorological data 
+4. Configure Firmament using the meteorological data 
 5. Calculate radiation environment / absorbed radiation for each leaf
 6. Calculate photosynthesis (Farquhar model implemented)
 7. Collect necessary data from the tree
@@ -36,8 +36,10 @@ For each time step for the chosen time period:
    
 After simulation:
 
-9. Save the collected tree data to an HDF5 file
+9.  Save the collected tree data to an HDF5 file
 10. Save VoxelSpace status to an HDF5 file (Voxels with leaves)
+	- RESOLVED: Framework to collect VoxelSpace data implented. Extend the implementation as necessary
+	(most likely by adding fields to the struct VoxelSpaceData). 
 11. Save other simulation related data required to an HDF5 file (to be able to reproduce results)
 
 Finally:
