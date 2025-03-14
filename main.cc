@@ -1,4 +1,6 @@
 #include <Lignum.h>
+#include <LGMHDF5File.h> 
+#include <HDF5VoxelData.h> 
 #include <VoxelSpace.h>
 #include <XMLTree.h>
 #include <QSMreader.h>
@@ -19,7 +21,8 @@ void Usage() {
 int main(int argc, char** argv) {
   //Photosynthesis model
   Farquhar P;
-  
+  //HDF5 dataset for VoxelSpace
+  LGMHDF5File h5file("TestFile.h5");
   if(argc < 2) {
     Usage();
     exit(0);
