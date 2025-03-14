@@ -11,7 +11,7 @@ def farquharplot(num:int,cmap:str):
     #Titles
     main_title = "Eastern cottonwood, Lu et al. 2011 \n Photosynthesis submodel"
     netco2title = r"Net $\mathrm{CO}_2$ assimilation rate"
-    co2title = r"$\mathrm{CO}_2$ assimilation rate (no respiration)"
+    co2title = r"Gross $\mathrm{CO}_2$ assimilation rate (no respiration)"
     
     #Create vectorized version of the Farquhar model
     frqhr = farquhar.PyFarquhar()
@@ -100,7 +100,7 @@ def farquharplot(num:int,cmap:str):
     #fig.suptitle(figure_title,multialignment='center')
     axis2.set_title(figure_title2,multialignment='center')
     axis2.set(xlabel='T (\N{DEGREE SIGN}C)', ylabel=r'Q ($\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}$)',
-             zlabel=r'$\mathrm{A_l}$ ($\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}$)')
+             zlabel=r'$\mathrm{A_{l}^{tot}}$ ($\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}$)')
     
     plt.show()
 
