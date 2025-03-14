@@ -11,6 +11,7 @@
 namespace LignumTLS{
   ///Data set name for VoxelSpace data 
   const string VOXELSPACEDATA("VoxelSpaceData");
+  ///Data set name for VoxelSpaceData attribute
   const string VSDATA_ATTRIBUTE("VoxelSpaceAxes");
   ///Data set attribute names
   const vector<string> VSDATA_ATTRIBUTE_NAMES={"X","Y","Z"}; 
