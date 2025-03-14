@@ -51,8 +51,15 @@ namespace LignumTLS{
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return The net CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\note To convert the net assimilation \e rate to the net CO2 assimilation of a leaf multiply
-    ///      the assimilation rate by the leaf area and the time step length in seconds.
+    ///      the net assimilation rate by the leaf area and the time step length in seconds.
     double Al(double T, double Q)const;
+    ///\brief CO2 assmilation \e rate
+    ///
+    /// CO2 assmilation \e rate without respiration:  \f$ (1-\Gamma^\ast/C_i)V_c \f$
+    ///\param T Temperature, \f$\mathrm{^\circ C}\f$
+    ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
+    ///\return The CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
+    double CO2assimilation(double T, double Q)const;
   protected:
     ///\brief The RuP2 \e saturated rate of carboxylation,  \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
