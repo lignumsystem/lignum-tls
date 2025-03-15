@@ -1,4 +1,4 @@
-///\file VoxelData.h
+///\file HDF5VoxelData.h
 ///\brief Data structure for HDF5 file
 ///
 ///Data structure containing important fields
@@ -26,9 +26,9 @@ namespace LignumTLS{
     double qabs;///< Absorbed radiation
   };
 
-  ///HDF5 compatible data items in VoxelSpace Data
+  ///HDF5 compatible data items in VoxelSpaceData
   ///\retval comp_data HDF5 CompType that can be used to create HDF5 data set.
-  ///\important Keep CreateVoxelSpaceCompData compatible with VoxelSpaceData
+  ///\important Keep CreateVoxelSpaceCompData() compatible with VoxelSpaceData
   ///\sa VoxelSpaceData
   inline H5::CompType CreateVoxelSpaceCompData(){
     H5::CompType comp_data(sizeof(VoxelSpaceData));
