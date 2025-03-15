@@ -11,7 +11,7 @@ namespace LignumTLS{
     return (1-gamma_star/ci)*vc-rd;
   }
 
-  double Farquhar::CO2assimilation(double T, double Q)const
+  double Farquhar::GrossCO2assimilation(double T, double Q)const
   {
     double gamma_star = Gammastar(T);
     double ci = Ci(T);

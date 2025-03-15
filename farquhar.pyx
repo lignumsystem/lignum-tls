@@ -6,8 +6,8 @@ cdef class PyFarquhar:
      def Al(self,T:float,Q:float):
          return self.f.Al(T,Q)
 
-     def CO2assimilation(self,T:float,Q:float):
-         return self.f.CO2assimilation(T,Q)
+     def GrossCO2assimilation(self,T:float,Q:float):
+         return self.f.GrossCO2assimilation(T,Q)
      
      def __dealloc__(self):
          del self.f

@@ -16,7 +16,7 @@ def farquharplot(num:int,cmap:str):
     #Create vectorized version of the Farquhar model
     frqhr = farquhar.PyFarquhar()
     vfrqhr = np.vectorize(frqhr.Al)
-    vco2 = np.vectorize(frqhr.CO2assimilation)
+    vco2 = np.vectorize(frqhr.GrossCO2assimilation)
     #Create meshgrid for temperature and photon flux density
     xmin = -35
     xmax = 50
