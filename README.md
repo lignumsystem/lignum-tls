@@ -57,18 +57,14 @@ The file *error.txt* contains errors and alerts found in comments and markdown (
 
 ## Python package
 The class Farquhar has a simple Python interface (package) that allows to use the Python test program 
-`farquharplot.py` to verify the correctness and to study the behaviour of the implemented Farquhar model. 
-Create a Python virtual environment, install required python packages and build the `farquhar`
-Python package:
+`farquharplot.py` to study the model behaviour. Create Python virtual environment as adviced 
+in *lignum-core* README file. Activate the virtual environment before building the package:
 	
-	sudo port install python312
-	/opt/local/bin/python3.12 -m venv cythonenv
-	source cythonenv/bin/activate
-	pip install -r requirements.txt
-	python3 setup.py build_ext --inplace
+	source ~/venv/lignumsystem/bin/activate
+	(lignumsystem) python3 setup.py build_ext --inplace
 	
-To run the test program:
+To run `farquhaplot.py`type:
 	
-	python3 farquharplot.py 
+	(lignumsystem) python3 farquharplot.py 
 	
-Simple interactive windows shows contour plot of the net CO2 assimilation rate by a leaf.
+`farquharplot.py` has the help (`-h/--help`) option to find instructions for usage.
