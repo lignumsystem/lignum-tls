@@ -5,7 +5,11 @@ A lignum project using TLS data to simulate crown-level GPP.
 ## Table of Contents
 - [LIGNUM-tls](#lignum-tls)
   - [Table of Contents](#table-of-contents)
-  - [Simulation framework (formerly Aims)](#simulation-framework)
+  - [Simulation framework](#simulation-framework)
+    - [Repeat for all TLS trees:](#repeat-for-all-tls-trees)
+    - [For each time step for the chosen time period:](#for-each-time-step-for-the-chosen-time-period)
+    - [After simulation:](#after-simulation)
+    - [Finally:](#finally)
   - [Task list](#task-list)
     - [Open questions](#open-questions)
     - [Preliminary tasks](#preliminary-tasks)
@@ -16,8 +20,6 @@ A lignum project using TLS data to simulate crown-level GPP.
     - [Further analysis](#further-analysis)
     - [Writing](#writing)
   - [Workflow overview](#workflow-overview)
-  - [\`\`\`mermaid](#mermaid)
-  - [theme: default](#theme-default)
 
 ## Simulation framework
 ### Repeat for all TLS trees:
@@ -84,13 +86,13 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [x] Delete old things in the repository
 - [x] Original .obj leaf data to .csv
 - [x] Original branch data to .csv (works with lignumreader)
-- [ ] Add branch convertion script
-- [ ] Add leaf conversion script
+- [x] Add branch convertion script
+- [x] Add leaf conversion script
 - [x] Convert all branch data to .csv
 - [ ] Convert all leaf data to .csv
 - [x] Figure out a good data sharing system (Google drive chosen)
 - [ ] Add GEE data extraction scripts
-- [x ] Add skeleton project to [lignum-system](https://github.com/lignumsystem) to be used by lignum-tls @jari
+- [x] Add skeleton project to [lignum-system](https://github.com/lignumsystem) to be used by lignum-tls @jari
 - [ ] Add all data for test tree to github project
 - [ ] Add workflow figure to README
 
@@ -103,7 +105,7 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [x] Read in branch data to lignum tree - Risto
 - [x] Read in leaf data (without petioles) to lignum structure @Risto @Jari
 - [ ] Visual inspection that leaf/branch data is okay
-  - [x ] Kites not currently visible in WB, but triangles are. Find a way to visualise kite shape.
+  - [x] Kites not currently visible in WB, but triangles are. Find a way to visualise kite shape.
 - [x] Check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise?
       - Hannah: anti-clockwise
 
@@ -170,11 +172,12 @@ behind functions (for example finding the bounding box for a tree and resizing t
 
 ## Workflow overview
 
-```mermaid
+```mermaid <!-- omit from toc -->
+
 ---
 config:
   look: neo
-  theme: default
+  theme: default <!-- omit from toc -->
 ---
 graph TB
 sq[Tree geometry] --> ci((Test Tree 1302))
@@ -186,4 +189,3 @@ subgraph Research questions
     M --> A[*H1.* Optimal crown architecture is driven by local light conditions]
     M --> B[*H2.* Light interception efficiency decreases with increasing tree size]
 end
-
