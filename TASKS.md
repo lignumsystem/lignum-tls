@@ -36,8 +36,9 @@ A lignum project using TLS data to simulate crown-level GPP.
 ### For each time step for the chosen time period:
 
 4. Configure Firmament using the meteorological data
-   - Use poplar weather data temporarily (can be done)?
+   - Use poplar weather data temporarily?
 5. Calculate radiation environment / absorbed radiation for each leaf
+   - What is the status for Kite leaf?
 6. Calculate photosynthesis
    - Farquhar model implemented
    - Hannah could establish species specific parameters
@@ -104,8 +105,8 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [x] Implement kite leaf including XML read and write.
 - [x] Read in branch data to lignum tree - Risto
 - [x] Read in leaf data (without petioles) to lignum structure @Risto @Jari
-- [ ] Visual inspection that leaf/branch data is okay
-  - [x] Kites not currently visible in WB, but triangles are. Find a way to visualise kite shape.
+- [x] Visual inspection that leaf/branch data is okay
+  - [x] Kites and Triangle leaves visible in WB.
 - [x] Check orientation of corner points of leaves for petioles, i.e. are they clockwise or anti-clockwise?
       - Hannah: anti-clockwise
 
@@ -129,7 +130,8 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [ ] Study poplar big leaf model
 - [ ] List input parameters for Farquhar - check poplar SI
 - [ ] Compile csv of input parameters
-- [ ] Draft implementation of Farquhar in Python (check poplar farquhar function)
+- [x] Draft implementation of Farquhar in Python (check poplar farquhar function)
+  - Farquahr implemented on C++
 - [ ] Import input file for Firmament
 - [ ] Check data before model testing
 - [ ] Visualise model results with matplotlib (3d mesh plot)
@@ -161,9 +163,11 @@ behind functions (for example finding the bounding box for a tree and resizing t
 - [ ] Add latex document
 - [ ] Abstract
 - [ ] Methods v1
+- [ ] Results v1 
 - [ ] Figs v1
 - [ ] Introduction
 - [ ] Methods v2
+- [ ] Results v2
 - [ ] Figs v2
 - [ ] Discussion
 - [ ] First draft
