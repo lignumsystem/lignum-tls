@@ -47,10 +47,9 @@ int main(int argc, char** argv) {
 
   // 2) VoxelSpace around the tree(s)
 
-  //Note that the luminosity of the upper hemisphere (=incoming radiation)
-  //is included in VoxelSpace
+  //Firmament is part of VoxelSpace. Its radiation values will be se later
   Firmament sky(6, 8, 1200.0);   //(no_incl, no_azim, rad_plane)
-  //Radiation value is only for example calculation
+  
   double box_xyz = 0.4;
   //Only box side lengths box_xyz and sky are here important
   VoxelSpace vs(Point(0,0,0),Point(1.0,1.0,1.0), box_xyz, box_xyz, box_xyz,
@@ -66,13 +65,24 @@ int main(int argc, char** argv) {
   vs.reset();
 
   cout << endl;
-  cout << "Lower left corner of VoxelSpace " << ll << endl;
-  cout << "Upper right corner of VoxelSpace" << ur << endl;
+  cout << "Lower left corner of VoxelSpace  " << ll << endl;
+  cout << "Upper right corner of VoxelSpace " << ur << endl;
 
   DumpHwTree(vs, lignum_tree_hw_k);
 
+
+  // 3) Radiation values of the VoxelSpace
+
+  double diffuse_radiation = 1200.0;
+  double direct_radiation = 0.0;
+  vector<double> direct_dir = {0.0,0.0,1.0};
   
-  // 3) Calculate light
+  vs.setDiffuseSkyRadiation(diffuse_radiation);
+  vs.setDirectSkyRadiation(direct_radiation);
+  vs.setDirectRadiationDirection(direct_dir);
+
+  
+  // 4) Calculate light
 
   cout << endl << "CALCULATING LIGHT" << endl << endl;
 
@@ -80,12 +90,13 @@ int main(int argc, char** argv) {
   bool own_box_shading = false;
   vs.calculateTurbidLight(use_border_forest, own_box_shading);
 
-  //vs.writeVoxBoxesToFile("box_data.txt", false);  //Write only boxes with foliage
 
+  
   //Record Qin values from voxelboxes to leaves
 
   ForEach(lignum_tree_hw_k, SetQinInLeaves(&vs) );
 
+ vs.writeVoxBoxesToFile("box_data.txt", false);  //Write only boxes with foliage
   
 
   return 0;
