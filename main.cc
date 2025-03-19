@@ -23,6 +23,8 @@ int main(int argc, char** argv) {
   Farquhar P;
   //HDF5 dataset for VoxelSpace
   LGMHDF5File h5file("TestFile.h5");
+  //Farquhar photosynthesis demonstration: 20 Celsius, 5 second time step
+  FarquharPhotosynthesis<HwQSMSegment_k,HwQSMBud_k,Kite> frqhrP(P,20,5);
   if(argc < 2) {
     Usage();
     exit(0);
@@ -86,7 +88,8 @@ int main(int argc, char** argv) {
 
   ForEach(lignum_tree_hw_k, SetQinInLeaves(&vs) );
 
-  
+  //Calculate photosyhtnesis
+  ForEach(lignum_tree_hw_k,frqhrP);
 
   return 0;
 }

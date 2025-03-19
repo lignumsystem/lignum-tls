@@ -1,7 +1,9 @@
 #ifndef FARQUHAR_H
 #define FARQUHAR_H
 #include <cmath>
+#include <list>
 #include <algorithm>
+#include <Lignum.h>
 ///\file Farquhar.h
 ///\brief Farquhar photosynthesis model
 ///
@@ -42,6 +44,13 @@ namespace LignumTLS{
 	     double Vcmax25_p=42.12, double Rd25_p=1.09, double R_p=8.314, double Q10_p=1.78,
 	     double Jmax25_p=88.01, double Sj_p=650, double Dj_p=2e5):
       Kc(Kc_p),Ko(Ko_p),Ca(Ca_p),Oa(Oa_p),Vcmax25(Vcmax25_p),Rd25(Rd25_p),R(R_p),Q10(Q10_p),Jmax25(Jmax25_p),Sj(Sj_p),Dj(Dj_p){}
+    ///\brief Copy constructor
+    ///\param frqhr Farquhar model
+    Farquhar(const Farquhar& frqhr);
+    ///\brief Asignment operator
+    ///\param frqhr Farquhar model
+    ///\retval *this Farquhar object after assignment
+    Farquhar& operator=(const Farquhar& frqhr);
     ///\brief The net CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\important This is the main method that returns the net CO2 assimilation rate, \f$A_l\f$, i.e. photosynthesis minus respiration:
     ///\f[
@@ -140,17 +149,86 @@ namespace LignumTLS{
     ///\sa Farquhar::Q10 (Turnbull et al 2002)
     double Rd(double T)const;
   private:
-    const double Kc;///< Michaelis constant for CO2,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
-    const double Ko;///< Michaelis constant for O2,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
-    const double Ca;///< Atmospheric CO2 concentration relative to 25 \f$\mathrm{^\circ C}\f$,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
-    const double Oa;///< Atmospheric O2 concentration relative to 25 \f$\mathrm{^\circ C}\f$,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
-    const double Vcmax25;///< The Vcmax value at 25 \f$\mathrm{^\circ C}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$ 
-    const double Rd25;///< Respiration rate at reference temperature 25 \f$\mathrm{^\circ C}\f$,\f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$ 
-    const double R;///< Gas constant, \f$\mathrm{J\cdot mol^{-1}\cdot K^{-1}}\f$
-    const double Q10;///< Respiration temperature coefficient, unitless
-    const double Jmax25;///< Maximum electron transport at 25 \f$\mathrm{^\circ C}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
-    const double Sj;///< Electron transport temperature response parameter (entropy term), \f$\mathrm{J\cdot K^{-1}\cdot mol^{-1}}\f$
-    const double Dj;///< Curvature parameter (energy of deactivation), \f$\mathrm{J\cdot mol^{-1}}\f$
+    double Kc;///< Michaelis constant for CO2,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
+    double Ko;///< Michaelis constant for O2,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
+    double Ca;///< Atmospheric CO2 concentration relative to 25 \f$\mathrm{^\circ C}\f$,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
+    double Oa;///< Atmospheric O2 concentration relative to 25 \f$\mathrm{^\circ C}\f$,  \f$\mathrm{\mu mol\cdot mol^{-1}}\f$
+    double Vcmax25;///< The Vcmax value at 25 \f$\mathrm{^\circ C}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$ 
+    double Rd25;///< Respiration rate at reference temperature 25 \f$\mathrm{^\circ C}\f$,\f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$ 
+    double R;///< Gas constant, \f$\mathrm{J\cdot mol^{-1}\cdot K^{-1}}\f$
+    double Q10;///< Respiration temperature coefficient, unitless
+    double Jmax25;///< Maximum electron transport at 25 \f$\mathrm{^\circ C}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
+    double Sj;///< Electron transport temperature response parameter (entropy term), \f$\mathrm{J\cdot K^{-1}\cdot mol^{-1}}\f$
+    double Dj;///< Curvature parameter (energy of deactivation), \f$\mathrm{J\cdot mol^{-1}}\f$
   };
+
+  ///\brief Apply Farquhar model in a tree
+  ///
+  ///Functor to traverse the tree with ForEach operator.
+  ///It will apply Farquhar model \f$\mathrm{A_l}\f$ for each leaf in a tree
+  ///The photosynthesis \f$\mathrm{P_{leaf}}\f$ of a single leaf depends on the leaf area \f$\mathrm{A_{leaf}}\f$
+  ///and the time step \f$\mathrm{t}\f$: \f$\mathrm{P_{leaf}=A_{l}(Q_{abs},T)*A_{leaf}*t}\f$
+  ///\sa The class LignumTLS::Farquhar 
+  template<class TS, class BUD, class LEAF>
+  class FarquharPhotosynthesis{
+  public:
+    ///\brief Default constructor
+    ///\param frqhr_p Farquhar model for photosynthesis
+    ///\param T_p Temperature (leaf temperature) in Celsius
+    ///\param time_step_p Time step in seconds
+    FarquharPhotosynthesis(const Farquhar& frqhr_p,double T_p, double time_step_p)
+      :frqhr(frqhr_p),T(T_p),time_step(time_step_p){}
+    ///\brief Copy constructor
+    ///\param frqhrp_p FarquharPhotosynthesis 
+    FarquharPhotosynthesis(const FarquharPhotosynthesis& frqhrp_p)
+      :frqhr(frqhrp_p.frqhr),T(frqhrp_p.T),time_step(frqhrp_p.time_step){}
+    ///\brief Assignment operator
+    ///\param frqhrp FarquharPhotosynthesis
+    ///\retval *this FarquharPhotosynthesis object after assignment
+    FarquharPhotosynthesis& operator=(const FarquharPhotosynthesis& frqhrp);
+    ///\brief  Function operator
+    ///
+    ///The photosynthesis \f$\mathrm{P_{leaf}}\f$ of a single leaf depends on the leaf area \f$\mathrm{A_{leaf}}\f$
+    ///and the time step \f$\mathrm{t}\f$: \f$\mathrm{P_{leaf}=A_{l}(Q_{abs},T)*A_{leaf}*t}\f$
+    ///\param tc TreeCompartment
+    ///\retval tc Current tree compartment in a tree
+    ///\note The leaf area \f$\mathrm{A_{leaf}}\f$ is based on degree of filling (\e dof).
+    ///If \e dof is 1 then leaf area equals the area of the geometric shape of the leaf.
+    ///\sa LignumTLS::Farquhar::Al()
+    TreeCompartment<TS,BUD>* operator()(TreeCompartment<TS,BUD>* tc)const;
+  private:
+    Farquhar frqhr;///<Farquhar photosynthesis model 
+    double T;///< Temperature (leaf temperature) in Celsius
+    double time_step;///Time step in seconds
+  };
+
+  template<class TS, class BUD, class LEAF>
+  FarquharPhotosynthesis<TS,BUD,LEAF>& FarquharPhotosynthesis<TS,BUD,LEAF>::operator=(const FarquharPhotosynthesis<TS,BUD,LEAF>& frqhrp)
+  {
+    frqhr = frqhrp.frqhr; T = frqhrp.T; time_step = frqhrp.time_step;
+    return *this;
+  }
+  
+  template<class TS, class BUD, class LEAF>
+  TreeCompartment<TS,BUD>* FarquharPhotosynthesis<TS,BUD,LEAF>::operator()(TreeCompartment<TS,BUD>* tc)const
+  {
+    if (HwTreeSegment<TS,BUD,LEAF>* hw_ts = dynamic_cast<HwTreeSegment<TS,BUD,LEAF>*>(tc)){
+      std::list<BroadLeaf<LEAF>* >& leaf_ls = GetLeafList(*hw_ts);
+      typename std::list<BroadLeaf<LEAF>*>::iterator first;
+      //More undestandable to loop leaves than to create another functor for the std::list  
+      for (first=leaf_ls.begin(); first != leaf_ls.end(); first++){
+	BroadLeaf<LEAF>* leaf = *first;
+	//Note leaf area, LGAA, is based on degree of filling (dof).
+	//If dof is 1 then leaf area equals the area of the geometric shape of the leaf
+	double leaf_area = GetValue(*leaf,LGAA);
+	double Qabs = GetValue(*leaf,LGAQabs);
+	double P = frqhr.Al(Qabs,T);
+	double Pleaf = P*leaf_area*time_step;
+	SetValue(*leaf,LGAP,Pleaf);
+      }
+    }
+    return tc;
+  }
+  
 }//End lignumtls
 #endif

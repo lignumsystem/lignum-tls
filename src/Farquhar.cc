@@ -1,6 +1,19 @@
 #include <Farquhar.h>
 
 namespace LignumTLS{
+
+  Farquhar::Farquhar(const Farquhar& f)
+    :Kc(f.Kc),Ko(f.Ko),Ca(f.Ca),Oa(f.Oa),Vcmax25(f.Vcmax25),Rd25(f.Rd25),
+     R(f.R),Q10(f.Q10),Jmax25(f.Jmax25),Sj(f.Sj),Dj(f.Dj)
+  {
+  }
+  
+  Farquhar& Farquhar::operator=(const Farquhar& f)
+  {
+    Kc=f.Kc; Ko=f.Ko; Ca=f.Ca; Oa=f.Oa; Vcmax25=f.Vcmax25; Rd25=f.Rd25;
+    R=f.R; Q10=f.Q10; Jmax25=f.Jmax25; Sj=f.Sj; Dj=f.Dj;
+    return *this;
+  }
   
   double Farquhar::Al(double T, double Q)const
   {
