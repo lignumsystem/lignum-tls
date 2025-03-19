@@ -40,8 +40,10 @@ A lignum project using TLS data to simulate crown-level GPP.
 5. Calculate radiation environment / absorbed radiation for each leaf
    - What is the status for Kite leaf?
 6. Calculate photosynthesis
-   - Farquhar model implemented
-   - Hannah could establish species specific parameters
+   - Can be done
+	 - Farquhar model implemented
+	 - FarquharPhotosynthesis calculates photosynthesis for each leaf
+   - Hannah could establish species specific parameters for Farquhar model
 7. Collect necessary data from the tree
    - Hannah could design data tables necessary
    - 2D and 3D tables/matrices can be saved to HDF5 file (HDF5 accepts N-dimensional tables).
