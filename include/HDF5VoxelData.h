@@ -15,7 +15,9 @@ namespace LignumTLS{
   const string VSDATA_ATTRIBUTE("VoxelSpaceAxes");
   ///Data set attribute names
   const vector<string> VSDATA_ATTRIBUTE_NAMES={"X","Y","Z"}; 
-  ///VoxelSpaceData data members contain data from VoxelSpace. Append all necessary data items.
+  ///\brief VoxelSpaceData for HDF5 file
+  ///
+  ///VoxelSpaceData  data members contain data from VoxelSpace. Append all necessary data items.
   ///This data structure will instantiate TMatrix3D<VoxelSpaceData>
   ///\important Keep VoxelSpaceData compatible with CreateVoxelSpaceCompData()
   ///\sa CreateVoxelSpaceCompData()
@@ -26,8 +28,10 @@ namespace LignumTLS{
     double qabs;///< Absorbed radiation
   };
 
-  ///HDF5 compatible data items in VoxelSpaceData
-  ///\retval comp_data HDF5 CompType that can be used to create HDF5 data set.
+  ///\brief HDF5 CompType for VoxelSpaceData
+  ///
+  ///HDF5 compatible data items in VoxelSpaceData that can be used to create HDF5 data set.
+  ///\retval comp_data HDF5 CompType 
   ///\important Keep CreateVoxelSpaceCompData() compatible with VoxelSpaceData
   ///\sa VoxelSpaceData
   inline H5::CompType CreateVoxelSpaceCompData(){

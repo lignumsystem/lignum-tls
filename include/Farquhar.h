@@ -51,7 +51,9 @@ namespace LignumTLS{
     ///\param frqhr Farquhar model
     ///\retval *this Farquhar object after assignment
     Farquhar& operator=(const Farquhar& frqhr);
-    ///\brief The net CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
+    ///\brief The net CO2 assimilation \e rate, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
+    ///
+    /// The net CO2 assimilation \e rate by a leaf with respiration
     ///\important This is the main method that returns the net CO2 assimilation rate, \f$A_l\f$, i.e. photosynthesis minus respiration:
     ///\f[
     ///A_l = (1-\Gamma^\ast/C_i)V_c-Rd
@@ -62,9 +64,9 @@ namespace LignumTLS{
     ///\note To convert the net assimilation \e rate to the net CO2 assimilation of a leaf multiply
     ///      the net assimilation rate by the leaf area and the time step length in seconds.
     double Al(double T, double Q)const;
-    ///\brief CO2 assmilation \e rate
+    ///\brief The gross CO2 assmilation \e rate, \f$ (1-\Gamma^\ast/C_i)V_c \f$
     ///
-    /// Gross CO2 assmilation \e rate without respiration:  \f$ (1-\Gamma^\ast/C_i)V_c \f$
+    /// The gross CO2 assmilation \e rate by a leaf without respiration:  \f$ (1-\Gamma^\ast/C_i)V_c \f$
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return The Gross CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
@@ -116,9 +118,9 @@ namespace LignumTLS{
     ///\return Potential rate of electron transport, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\sa Farquhar::Jmax
     double J(double T, double Q)const;
-    ///\brief Maximum electron transport
+    ///\brief Maximum electron transport, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///
-    ///Maximum light saturated electron transport, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
+    ///Maximum light saturated electron transport.
     ///\param T  Temperature, \f$\mathrm{^\circ C}\f$
     ///\return Light saturated potential rate of electron transport, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\sa Farquhar::J
@@ -126,7 +128,7 @@ namespace LignumTLS{
     double Jmax(double T)const;
     ///\brief Carboxylation velocity, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$ 
     ///
-    ///Maximum RuP2-saturated rate of carboxylation corrected relative to the rate at 25 \f$\mathrm{^\circ C}\f$,
+    ///Maximum RuP2-saturated rate of carboxylation corrected relative to the rate at 25. 
     /// 
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\return Maximum RuP2-saturated rate of carboxylation corrected for 25 \f$\mathrm{^\circ C}\f$, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$ 
@@ -135,7 +137,7 @@ namespace LignumTLS{
     double Vcmax(double T)const;
     ///\brief Oxygenation velocity, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///
-    ///Maximum oxygenation velocity, in terms of Vcmax
+    ///Maximum oxygenation velocity, in terms of Vcmax.
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\return 0.21*Vcmax, \f$\mathrm{\mu mol\cdot m^{-2}\cdot s^{-1}}\f$
     ///\note The equation is also in Long 1991
@@ -168,7 +170,11 @@ namespace LignumTLS{
   ///It will apply Farquhar model \f$\mathrm{A_l}\f$ for each leaf in a tree
   ///The photosynthesis \f$\mathrm{P_{leaf}}\f$ of a single leaf depends on the leaf area \f$\mathrm{A_{leaf}}\f$
   ///and the time step \f$\mathrm{t}\f$: \f$\mathrm{P_{leaf}=A_{l}(Q_{abs},T)*A_{leaf}*t}\f$
-  ///\sa The class LignumTLS::Farquhar 
+  ///\sa The class LignumTLS::Farquhar
+  ///\sa Lignum::ForEach()
+  ///\tparam TS Tree segment
+  ///\tparam BUD Bud
+  ///\tparam LEAF Leaf shape
   template<class TS, class BUD, class LEAF>
   class FarquharPhotosynthesis{
   public:
@@ -186,20 +192,25 @@ namespace LignumTLS{
     ///\param frqhrp FarquharPhotosynthesis
     ///\retval *this FarquharPhotosynthesis object after assignment
     FarquharPhotosynthesis& operator=(const FarquharPhotosynthesis& frqhrp);
-    ///\brief  Function operator
+    ///\brief  Photosynthesis in a tree 
     ///
-    ///The photosynthesis \f$\mathrm{P_{leaf}}\f$ of a single leaf depends on the leaf area \f$\mathrm{A_{leaf}}\f$
-    ///and the time step \f$\mathrm{t}\f$: \f$\mathrm{P_{leaf}=A_{l}(Q_{abs},T)*A_{leaf}*t}\f$
-    ///\param tc TreeCompartment
-    ///\retval tc Current tree compartment in a tree
-    ///\note The leaf area \f$\mathrm{A_{leaf}}\f$ is based on degree of filling (\e dof).
+    ///Apply Farquhar photosynthesis model for each leaf in a tree. 
+    ///The photosynthesis \f$\mathrm{P_{leaf}}\f$ of a single leaf
+    ///depends on the net CO2 assmilation rate (\f$A_l\f$), true leaf area (\f$\mathrm{A_{leaf}}\f$)
+    ///and the time step (\f$\mathrm{t}\f$): \f$\mathrm{P_{leaf}=A_{l}(Q_{abs},T)*A_{leaf}*t}\f$
+    ///\param tc Current tree compartment 
+    ///\retval tc Current tree compartment 
+    ///\note The leaf area (\f$\mathrm{A_{leaf}}\f$) is based on degree of filling (\e dof).
     ///If \e dof is 1 then leaf area equals the area of the geometric shape of the leaf.
     ///\sa LignumTLS::Farquhar::Al()
+    ///\sa Lignum::ForEach
+    ///\sa Lignum::LGAA
+    ///\sa Lignum::BroadLeaf::GetValue()
     TreeCompartment<TS,BUD>* operator()(TreeCompartment<TS,BUD>* tc)const;
   private:
     Farquhar frqhr;///<Farquhar photosynthesis model 
     double T;///< Temperature (leaf temperature) in Celsius
-    double time_step;///Time step in seconds
+    double time_step;///<Time step in seconds
   };
 
   template<class TS, class BUD, class LEAF>
@@ -222,7 +233,9 @@ namespace LignumTLS{
 	//If dof is 1 then leaf area equals the area of the geometric shape of the leaf
 	double leaf_area = GetValue(*leaf,LGAA);
 	double Qabs = GetValue(*leaf,LGAQabs);
+	//Farquhar model photosynthesis
 	double P = frqhr.Al(Qabs,T);
+	//Leaf photosynthesis for the time step
 	double Pleaf = P*leaf_area*time_step;
 	SetValue(*leaf,LGAP,Pleaf);
       }
