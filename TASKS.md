@@ -28,7 +28,7 @@ A lignum project using TLS data to simulate crown-level GPP.
    - Can be done
 2. Read the meteorological data
    - Hannah could obtain the data
-   - Use poplar weather data file for the time being?<br>
+   - Use cottonwood/(poplar weather data file for the time being?<br>
      (Until the meterological data becomes available)
 3. Create voxel space around the tree
    - Can be done
@@ -36,7 +36,7 @@ A lignum project using TLS data to simulate crown-level GPP.
 ### For each time step for the chosen time period:
 
 4. Configure Firmament using the meteorological data
-   - Use poplar weather data temporarily?
+   - Use cottonwood/poplar weather data temporarily?
 5. Calculate radiation environment / absorbed radiation for each leaf
    - What is the status for Kite leaf?
 6. Calculate photosynthesis
