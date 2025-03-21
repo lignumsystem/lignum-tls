@@ -66,7 +66,7 @@ namespace LignumTLS{
     double Al(double T, double Q)const;
     ///\brief The gross CO2 assmilation \e rate, \f$ (1-\Gamma^\ast/C_i)V_c \f$
     ///
-    /// The gross CO2 assmilation \e rate by a leaf without respiration:  \f$ (1-\Gamma^\ast/C_i)V_c \f$
+    /// The gross CO2 assmilation \e rate by a leaf without respiration.
     ///\param T Temperature, \f$\mathrm{^\circ C}\f$
     ///\param Q  Absorbed photon flux density (both direct and diffuse), \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
     ///\return The Gross CO2 assimilation \e rate by a leaf, \f$\mathrm{\mu mol\cdot m^{–2}\cdot s^{–1}}\f$
@@ -226,7 +226,7 @@ namespace LignumTLS{
     if (HwTreeSegment<TS,BUD,LEAF>* hw_ts = dynamic_cast<HwTreeSegment<TS,BUD,LEAF>*>(tc)){
       std::list<BroadLeaf<LEAF>* >& leaf_ls = GetLeafList(*hw_ts);
       typename std::list<BroadLeaf<LEAF>*>::iterator first;
-      //More undestandable to loop leaves than to create another functor for the std::list  
+      //More readable, understandable to loop leaves than to create another functor for the std::list  
       for (first=leaf_ls.begin(); first != leaf_ls.end(); first++){
 	BroadLeaf<LEAF>* leaf = *first;
 	//Note leaf area, LGAA, is based on degree of filling (dof).
@@ -234,7 +234,7 @@ namespace LignumTLS{
 	double leaf_area = GetValue(*leaf,LGAA);
 	double Qabs = GetValue(*leaf,LGAQabs);
 	//Farquhar model photosynthesis
-	double P = frqhr.Al(Qabs,T);
+	double P = frqhr.Al(T,Qabs);
 	//Leaf photosynthesis for the time step
 	double Pleaf = P*leaf_area*time_step;
 	SetValue(*leaf,LGAP,Pleaf);
