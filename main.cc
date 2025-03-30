@@ -4,6 +4,7 @@
 #include <VoxelSpace.h>
 #include <XMLTree.h>
 #include <QSMreader.h>
+#include <TLSTree.h>
 #include <Lignum-tls.h>
 #include <Farquhar.h>
 
@@ -24,7 +25,7 @@ int main(int argc, char** argv) {
   //HDF5 dataset for VoxelSpace
   LGMHDF5File h5file("TestFile.h5");
   //Farquhar photosynthesis demonstration: 20 Celsius, 5 second time step
-  FarquharPhotosynthesis<HwQSMSegment_k,HwQSMBud_k,Kite> frqhrP(P,20,5);
+  FarquharPhotosynthesis<TLSSegment,TLSBud,Kite> frqhrP(P,20,5);
   if(argc < 2) {
     Usage();
     exit(0);
@@ -32,18 +33,18 @@ int main(int argc, char** argv) {
 
   // 1) Read the tree from a file
 
-  Tree<HwQSMSegment_k,HwQSMBud_k> lignum_tree_hw_k(Point(0,0,0), PositionVector(0,0,1.0));
+  Tree<TLSSegment,TLSBud> lignum_tree(Point(0,0,0), PositionVector(0,0,1.0));
   string tree_file = argv[1];
-  XMLDomTreeReader<HwQSMSegment_k,HwQSMBud_k,Kite> tree_reader;
-  tree_reader.readXMLToTree(lignum_tree_hw_k, tree_file);
+  XMLDomTreeReader<TLSSegment,TLSBud,Kite> tree_reader;
+  tree_reader.readXMLToTree(lignum_tree, tree_file);
 
 
   double LA = 0.0;
-  LA = Accumulate(lignum_tree_hw_k, LA, CollectLeafArea<HwQSMSegment_k,HwQSMBud_k,Kite>());
+  LA = Accumulate(lignum_tree, LA, CollectLeafArea<TLSSegment,TLSBud,Kite>());
   
   cout << "Tree " << tree_file << " read in, its characteristics are: " << endl;
-  cout <<  "Dbh: " << 100*GetValue(lignum_tree_hw_k,LGADbh) << " cm,  Dbase: "
-       << 100*GetValue(lignum_tree_hw_k,LGADbase) << " cm,  H: " << GetValue(lignum_tree_hw_k,LGAH)
+  cout <<  "Dbh: " << 100*GetValue(lignum_tree,LGADbh) << " cm,  Dbase: "
+       << 100*GetValue(lignum_tree,LGADbase) << " cm,  H: " << GetValue(lignum_tree,LGAH)
        << " m,  Leaf area: " << LA << " m2" << endl;
 
 
@@ -58,8 +59,8 @@ int main(int argc, char** argv) {
 		5, 5, 5, sky);
   
   BoundingBox bb;
-  FindHwBoundingBox<HwQSMSegment_k,HwQSMBud_k,Kite> fb;
-  bb = Accumulate(lignum_tree_hw_k, bb, fb);
+  FindHwBoundingBox<TLSSegment,TLSBud,Kite> fb;
+  bb = Accumulate(lignum_tree, bb, fb);
 
   Point ll = bb.getMin();
   Point ur = bb.getMax();
@@ -70,7 +71,7 @@ int main(int argc, char** argv) {
   cout << "Lower left corner of VoxelSpace  " << ll << endl;
   cout << "Upper right corner of VoxelSpace " << ur << endl;
 
-  DumpHwTree(vs, lignum_tree_hw_k);
+  DumpHwTree(vs, lignum_tree);
 
 
   // 3) Radiation values of the VoxelSpace
@@ -96,11 +97,11 @@ int main(int argc, char** argv) {
   
   //Record Qin values from voxelboxes to leaves
 
-  ForEach(lignum_tree_hw_k, SetQinInLeaves(&vs) );
+  ForEach(lignum_tree, SetQinInLeaves<TLSSegment,TLSBud>(&vs) );
 
   //Calculate photosyhtnesis
-  ForEach(lignum_tree_hw_k,frqhrP);
- vs.writeVoxBoxesToFile("box_data.txt", false);  //Write only boxes with foliage
+  ForEach(lignum_tree,frqhrP);
+  vs.writeVoxBoxesToFile("box_data.txt", false);  //Write only boxes with foliage
 
   return 0;
 }

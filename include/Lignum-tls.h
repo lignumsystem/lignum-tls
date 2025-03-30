@@ -7,29 +7,29 @@
 #include <VoxelBox.h>
 
 
-
-
-class SetQinInLeaves {
- public:
- SetQinInLeaves(VoxelSpace* vsp) : space(vsp) {;}
+namespace LignumTLS{
+  template <class TS, class BUD> 
+  class SetQinInLeaves {
+  public:
+    SetQinInLeaves(VoxelSpace* vsp) : space(vsp) {;}
   
-  TreeCompartment<HwQSMSegment_k,HwQSMBud_k>* operator()
-    (TreeCompartment<HwQSMSegment_k,HwQSMBud_k>* tc)const {
-    if(HwTreeSegment<HwQSMSegment_k,HwQSMBud_k,Kite>* ts =
-       dynamic_cast<HwTreeSegment<HwQSMSegment_k,HwQSMBud_k,Kite>*>(tc)){
-      list<BroadLeaf<Kite>*> leaf_list = GetLeafList(*ts);
-      std::list<BroadLeaf<Kite>*>::iterator Il;
-      for(Il = leaf_list.begin(); Il != leaf_list.end(); Il++) {
-	Point p = GetCenterPoint(**Il);
-	VoxelBox box =  space->getVoxelBox(p);
-	SetValue(**Il, LGAQin, box.getQin());
-	vector<int> ii = space->getBoxIndexes(p);
+    TreeCompartment<TS,BUD>* operator()
+      (TreeCompartment<TS,BUD>* tc)const {
+      if(HwTreeSegment<TS,BUD,Kite>* ts =
+	 dynamic_cast<HwTreeSegment<TS,BUD,Kite>*>(tc)){
+	list<BroadLeaf<Kite>*> leaf_list = GetLeafList(*ts);
+	std::list<BroadLeaf<Kite>*>::iterator Il;
+	for(Il = leaf_list.begin(); Il != leaf_list.end(); Il++) {
+	  Point p = GetCenterPoint(**Il);
+	  VoxelBox box =  space->getVoxelBox(p);
+	  SetValue(**Il, LGAQin, box.getQin());
+	  vector<int> ii = space->getBoxIndexes(p);
+	}
       }
+      return tc;
     }
-    return tc;
-  }
- private:
-  VoxelSpace* space;
-};
-
+  private:
+    VoxelSpace* space;
+  };
+}
 #endif
