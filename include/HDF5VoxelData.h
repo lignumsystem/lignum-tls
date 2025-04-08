@@ -1,5 +1,5 @@
 ///\file HDF5VoxelData.h
-///\brief Data structure for HDF5 file
+///Data structure for HDF5 file.
 ///
 ///Data structure containing important fields
 ///from VoxelBox that can be saved to HDF5 file
@@ -8,6 +8,7 @@
 #define VOXELDATA_H
 #include <H5Cpp.h>
 
+///\brief Analysis of photosynthetic efficiency in TLS/QSM trees 
 namespace LignumTLS{
   ///Data set name for VoxelSpace data 
   const string VOXELSPACEDATA("VoxelSpaceData");

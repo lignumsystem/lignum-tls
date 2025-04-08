@@ -1,13 +1,13 @@
+///\file Farquhar.h
+///Farquhar photosynthesis model.
+///
+///Farquhar photosynthesis model as in Lu et al 2011.
 #ifndef FARQUHAR_H
 #define FARQUHAR_H
 #include <cmath>
 #include <list>
 #include <algorithm>
 #include <Lignum.h>
-///\file Farquhar.h
-///\brief Farquhar photosynthesis model
-///
-///Farquhar photosynthesis model as in Lu et al 2011.
 
 namespace LignumTLS{
   ///\brief Farquhar photosynthesis model
