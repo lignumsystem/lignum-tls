@@ -62,6 +62,11 @@ A lignum project using TLS data to simulate crown-level GPP.
 
 11. Analysis of the simulations to answer questions in the  Workflow overview (see the figure in the end) 
 
+12. Create VTK/VTPC files for ParaView visualization
+    - See LignumVTK project for details how to create VTK/VTPC files from Lignum trees.
+    - Visualize trees in ParaView or export files compatible with for example Blender.
+    - VTK file formats allows scalars, for example associate absorbed radiation and photosynthesis with each leaf. 
+    
 Risto's outline for the main program sounds reasonable. The main loop should be rather straightforward
 because we are not simulation growth, but the trees are static (?). We might be able to keep the main program 
 clean by using generic functions (i.e. ForEach, Accumulate, AccumulateDown, PropagetUp) and hiding details 
